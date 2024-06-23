@@ -1,5 +1,3 @@
-![Logo](./images/black-logo.svg)
-
 # CoNTeX
 
 Collaborative note-taking web app with Markdown and $\LaTeX$ syntax
@@ -8,9 +6,9 @@ Collaborative note-taking web app with Markdown and $\LaTeX$ syntax
 
 Use PHP as the primary programming language
 
-- Apache
-- MariaDB (MySQL)
 - PHP
+- Apache (Web Server)
+- MariaDB/MySQL (RDBMS)
 
 ## Overall Planned Features
 
@@ -39,24 +37,22 @@ A thing to discuss here first is the root of its concept, the **Bayes theorem**,
 
 $$
 \begin{equation}
-    P(h|d) = \frac{P(d|h) \cdot P(h)}{P(d)} 
+    P(h|d) = \frac{P(d|h) \cdot P(h)}{P(d)}
 \end{equation}
 $$
 
 In plain English version in same layout.
 
 $$
-\begin{equation} 
-    \text{posterior} = \frac{\text{prior} \cdot 
+\begin{equation}
+    \text{posterior} = \frac{\text{prior} \cdot
 \text{likelihood}}{\text{evidence}} \end{equation}
 $$
 
-
 | Header 1 | Header 2 |
-|----------|----------|
+| -------- | -------- |
 | Cell 1   | Cell 2   |
 | Cell 3   | Cell 4   |
-
 
 $$
 \begin{tabular}{ c  c  c }
@@ -65,17 +61,17 @@ $$
 \end{tabular}
 $$
 
+Sample matrices:
 
-One can use matrices:
-
-$$T^{\mu\nu}=\begin{pmatrix}
+$$
+T^{\mu\nu}=\begin{pmatrix}
 \varepsilon&0&0&0\\
 0&\varepsilon/3&0&0\\
 0&0&\varepsilon/3&0\\
 0&0&0&\varepsilon/3
-\end{pmatrix},$$
+\end{pmatrix},
+$$
 
-integrals:
+sample integrals:
 
 $$P_\omega={n_\omega\over 2}\hbar\omega\,{1+R\over 1-v^2}\int\limits_{-1}^{1}dx\,(x-v)|x-v|,$$
-

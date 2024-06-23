@@ -1,48 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>CoNTeX: Collaborative Note-taking in Markdown & LaTeX</title>
-    <link rel="icon" href="./images/white-logo.svg">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/fonts.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/preview.css" rel="stylesheet">
-  </head>
-  <body>
-    <!-- Navigation bar -->
-    <nav class="navbar">
-      <div class="navbar-tools">
-        <button id="folder-button" class="nb-btn" type="button">
-          <img id="folder-icon" class="nb-tl-svg" src="images/folder-solid.svg" alt="folder">
-        </button>
-        <button id="undo-button" class="nb-btn" type="button">
-          <img class="nb-tl-svg" src="images/rotate-left-solid.svg" alt="undo">
-        </button>
-        <button id="redo-button" class="nb-btn" type="button">
-          <img class="nb-tl-svg" src="images/rotate-right-solid.svg" alt="redo">
-        </button>
-      </div>
 
-      <div class="navbar-logo">
-        <a class="navbar-logo-link" href="#">
-          <img id="navbar-logo-img" src="./images/white-logo.svg" alt="CoNTeX">
-        </a>   
-      </div>
+<head>
+    <title>CoNTeX</title>
+    <link rel="icon" type="image/png" href="img/ctx-sq-light.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/style.css" rel="stylesheet" />
+</head>
 
-      <div class="navbar-account">
-        <a class="navbar-account-name" href="#">User</a>   
-        <div class="navbar-acc-sp">
-          <a class="nagvbar-account-picture" href="#">
-            <img class="navbar-profile" src="./images/account.png" alt="image">
-          </a>   
+<body>
+    <nav>
+        <div class="navbar">
+            <div class="navbar-tools">
+                <button id="folder-button" class="nb-btn" type="button">
+                    <img id="folder-icon" class="nb-tl-svg" src="img/folder-solid.svg" alt="folder" />
+                </button>
+                <button class="nb-btn" type="button">
+                    <img class="nb-tl-svg" src="img/rotate-left-solid.svg" alt="undo" />
+                </button>
+                <button class="nb-btn" type="button">
+                    <img class="nb-tl-svg" src="img/rotate-right-solid.svg" alt="redo" />
+                </button>
+
+                <p>document.md</p>
+            </div>
+
+            <a href="/" id="logo-name">
+                <img id="logo-img" src="img/ctx-light.png" alt="CoNTeX logo" /></a>
         </div>
-      </div>
     </nav>
-    
+
     <!-- Editor and previewer for LaTeX and Markdown -->
-    <div class="main">
-      <div class="half-width" id="main-editor">
+    <div class="editor">
+        <div class="half-width">
         <!-- Get default mesage on screen -->
         <?php
         $file_path = "./README.md";
@@ -51,16 +42,19 @@
             $file_contents = file_get_contents($file_path);
         }
         ?>
-        <!-- Display textarea with file contents when no edits are done -->
-        <textarea id="source-text" placeholder="Enter your text here"><?php 
-          echo htmlspecialchars($file_contents); 
+
+        <textarea class="inside-half-width" id="source-text" placeholder="Enter your text here"><?php
+          echo htmlspecialchars($file_contents);
         ?></textarea>
-      </div>
+        </div>
 
-      <pre id="main-preview" class="half-width"><code id="render-text"></code></pre>
+        <pre class="half-width"><code
+        class="inside-half-width" 
+        id="render-text">Text</code></pre>
     </div>
+</body>
 
-    <script src="./scripts/parser.js"></script>
-    <script src="./scripts/editor.js"></script>
-  </body>
+<script src="js/parser.js"></script>
+<script src="js/editor.js"></script>
+
 </html>
