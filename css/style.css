@@ -453,6 +453,12 @@ body {
         outline: none;
         border: 0;
       }
+
+      #render-text {
+        overflow-y: scroll;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
     }
   }
 
