@@ -26,7 +26,7 @@
                 <p>document.md</p>
             </div>
 
-            <a href="/" id="logo-name">
+            <a href="index.php" id="logo-name">
                 <img id="logo-img" src="img/ctx-light.png" alt="CoNTeX logo" /></a>
         </div>
     </nav>

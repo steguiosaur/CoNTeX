@@ -12,7 +12,7 @@
 <body>
     <nav>
         <div class="container navbar">
-            <a href="/" id="logo-name">
+            <a href="index.php" id="logo-name">
                 <img id="logo-img" src="img/ctx-light.png" alt="CoNTeX logo" />CoNTeX</a>
         </div>
     </nav>
@@ -34,7 +34,7 @@
                     <br />
                     <p>Didn't have an account? <a href="signup.php">Sign Up</a></p>
                 </form>
-                <a class="back-home" href="/">Back to Homepage</a>
+                <a class="back-home" href="index.php">Back to Homepage</a>
             </section>
         </div>
     </div>
