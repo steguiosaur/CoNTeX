@@ -13,10 +13,15 @@ Use PHP as the primary programming language
 ## Overall Planned Features
 
 1. Login/SignUp user account system
-2. Markdown + LaTeX editor
-3. Markdown + LaTeX previewer
+2. Markdown + $\LaTeX$ editor
+3. Markdown + $\LaTeX$ previewer
 4. File-tree for Current Notes in the Vault
 5. Notes vault sharing for collaborative editing
+
+### v0.2.0 Features
+
+- [ ] Syntax highlighting on editor
+- [ ] Auto-pairing for brackets, parenthesis, and other delimiters
 
 ### v0.1.0 Features
 
@@ -24,8 +29,6 @@ Use PHP as the primary programming language
 - [x] `<previewer>` field for rendering parsed Markdown text
 - [x] `<previewer>` update on `<textarea>` input
 - [x] Scroll synchronization on `<textarea>` and `<previewer>`
-- [ ] Syntax highlighting on editor
-- [ ] Auto-pairing for brackets, parenthesis, and other delimiters
 - [x] Markdown parser
 - [x] $\LaTeX$ parser
 
@@ -49,17 +52,12 @@ $$
 \text{likelihood}}{\text{evidence}} \end{equation}
 $$
 
+Table in Markdown:
+
 | Header 1 | Header 2 |
 | -------- | -------- |
 | Cell 1   | Cell 2   |
 | Cell 3   | Cell 4   |
-
-$$
-\begin{tabular}{ c  c  c }
-    Header 1 & Header 2 & Header 3\\
-    Cell 1 & Cell 2 & Cell 3\\
-\end{tabular}
-$$
 
 Sample matrices:
 
@@ -72,6 +70,6 @@ T^{\mu\nu}=\begin{pmatrix}
 \end{pmatrix},
 $$
 
-sample integrals:
+Sample integrals:
 
 $$P_\omega={n_\omega\over 2}\hbar\omega\,{1+R\over 1-v^2}\int\limits_{-1}^{1}dx\,(x-v)|x-v|,$$

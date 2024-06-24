@@ -2,28 +2,28 @@
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  src: local(""), url("../fonts/static/Inter-Regular.ttf");
+  src: local(""), url("../fonts/inter/Inter-Regular.ttf");
 }
 
 @font-face {
   font-family: "Inter";
   font-style: italic;
   font-weight: 400;
-  src: local(""), url("../fonts/static/Inter-Italic.ttf");
+  src: local(""), url("../fonts/inter/Inter-Italic.ttf");
 }
 
 @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
-  src: local(""), url("../fonts/static/Inter-Bold.ttf");
+  src: local(""), url("../fonts/inter/Inter-Bold.ttf");
 }
 
 @font-face {
   font-family: "Inter";
   font-style: italic;
   font-weight: 700;
-  src: local(""), url("../fonts/static/Inter-BoldItalic.ttf");
+  src: local(""), url("../fonts/inter/Inter-BoldItalic.ttf");
 }
 
 :root {
@@ -382,86 +382,6 @@ body {
     bottom: 0px;
   }
 
-  /* editor config */
-  .navbar {
-    .navbar-tools {
-      display: flex;
-      align-items: center;
-
-      .nb-btn {
-        width: auto;
-        height: 30px;
-        margin: 0 2px;
-        background-color: transparent;
-        border-color: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .nb-tl-svg {
-          width: 20px;
-          filter: invert(100%) brightness(92%) contrast(89%);
-        }
-
-        .nb-btn:hover {
-          filter: brightness(0.8);
-        }
-
-        .nb-btn:active {
-          filter: brightness(0.6);
-        }
-      }
-
-      p {
-        margin: 0 2px;
-        font: var(--button-text);
-      }
-
-      @media (max-width: 300px) {
-        p {
-          display: none;
-        }
-      }
-
-      #folder-button {
-        margin: 0 5px;
-      }
-    }
-  }
-
-  .editor {
-    width: 100%;
-    display: flex;
-    height: calc(100vh - 50px);
-
-    .half-width {
-      height: 100%;
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-
-      .inside-half-width {
-        flex: 1;
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
-        padding: 10px;
-      }
-
-      #source-text {
-        resize: none;
-        outline: none;
-        border: 0;
-      }
-
-      #render-text {
-        overflow-y: scroll;
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
-    }
-  }
-
   /* vault config */
   .banner {
     display: flex;
@@ -573,6 +493,86 @@ body {
     @media (max-width: 600px) {
       .vault-section {
         grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  /* editor config */
+  .navbar {
+    .navbar-tools {
+      display: flex;
+      align-items: center;
+
+      .nb-btn {
+        width: auto;
+        height: 30px;
+        margin: 0 2px;
+        background-color: transparent;
+        border-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .nb-tl-svg {
+          width: 20px;
+          filter: invert(100%) brightness(92%) contrast(89%);
+        }
+
+        .nb-btn:hover {
+          filter: brightness(0.8);
+        }
+
+        .nb-btn:active {
+          filter: brightness(0.6);
+        }
+      }
+
+      p {
+        margin: 0 2px;
+        font: var(--button-text);
+      }
+
+      @media (max-width: 300px) {
+        p {
+          display: none;
+        }
+      }
+
+      #folder-button {
+        margin: 0 5px;
+      }
+    }
+  }
+
+  .editor {
+    width: 100%;
+    display: flex;
+    height: calc(100vh - 50px);
+
+    .half-width {
+      height: 100%;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+
+      .inside-half-width {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+      }
+
+      #source-text {
+        resize: none;
+        outline: none;
+        border: 0;
+      }
+
+      #render-text {
+        overflow-y: scroll;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
     }
   }
