@@ -47,7 +47,7 @@
     </div>
 
     <footer>
-        <div class="container">Copyright 2024 Steve Pabular</div>
+        <div class="container">&copy CoNTeX 2024. All Rights Reserved.</div>
     </footer>
 </body>
 

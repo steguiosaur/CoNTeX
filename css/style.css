@@ -116,6 +116,7 @@ body {
   .main {
     width: 100vw;
     background-color: var(--colorprimary);
+    min-height: 100vh;
 
     .main-intro {
       width: 100%;
@@ -438,7 +439,6 @@ body {
   .vaults {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 50px);
 
     h4 {
       margin: 10px 0;
