@@ -21,7 +21,7 @@
         <div class="container">
             <section class="form-section">
                 <h3>Log into your Account</h3>
-                <form action="/login" method="POST" class="form-box">
+                <form action="" method="POST" class="form-box">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required />
 
@@ -29,6 +29,42 @@
                     <input type="password" id="password" name="password" required />
 
                     <p><input type="checkbox" id="remember-me" name="remember-me" /> Remember Me</p>
+
+                    <?php
+                    session_start();
+
+                    if (isset($_POST['username'], $_POST['password'])) {
+                        $username = $_POST['username'];
+                        $password = $_POST['password'];
+
+                        include("database/db_connect.php");
+
+                        // retrieve user data based on username
+                        $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE username = ?");
+                        if ($stmt === false) {
+                            die("Prepare failed: " . htmlspecialchars($conn->error));
+                        }
+                        $stmt->bind_param("s", $username);
+                        $stmt->execute();
+                        $stmt->bind_result($user_id, $db_username, $db_password);
+                        $stmt->fetch();
+
+                        // verify password and set session
+                        if (password_verify($password, $db_password)) {
+                            // verification successful
+                            $_SESSION['user_id'] = $user_id;
+                            $_SESSION['username'] = $db_username;
+
+                            header("Location: vault.php");
+                            exit();
+                        } else {
+                            echo "<p style='color: red;'>Invalid username or password.</p>";
+                        }
+
+                        $stmt->close();
+                        $conn->close();
+                    }
+                    ?>
 
                     <button type="submit">Login</button>
                     <br />

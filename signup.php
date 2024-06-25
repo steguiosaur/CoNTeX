@@ -61,10 +61,6 @@
 
                             // checks if username or email already exist
                             $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
-                            if ($stmt === false) {
-                                die("Prepare failed: " . htmlspecialchars($conn->error));
-                            }
-
                             $stmt->bind_param("ss", $username, $email);
                             $stmt->execute();
                             $result = $stmt->get_result();
@@ -77,11 +73,8 @@
 
                                 // insert new user on database
                                 $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-                                if ($stmt === false) {
-                                    die("Prepare failed: " . htmlspecialchars($conn->error));
-                                }
-
                                 $stmt->bind_param("sss", $username, $email, $hashed_password);
+
                                 if ($stmt->execute()) {
                                     header("Location: login.php");
                                     exit();
@@ -94,7 +87,7 @@
                             $conn->close();
                         }
 
-                        // Display errors if any
+                        // display errors if any
                         if (!empty($errors)) {
                             foreach ($errors as $error) {
                                 echo "<p style=\"color: red;\" class='error'>$error</p>";
