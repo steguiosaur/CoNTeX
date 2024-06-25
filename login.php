@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,7 +21,7 @@
         <div class="container">
             <section class="form-section">
                 <h3>Log into your Account</h3>
-                <form action="/login" method="post" class="form-box">
+                <form action="/login" method="POST" class="form-box">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required />
 
@@ -33,7 +33,6 @@
                     <button type="submit">Login</button>
                     <br />
                     <p>Didn't have an account? <a href="signup.php">Sign Up</a></p>
-
                 </form>
                 <a class="back-home" href="index.php">Back to Homepage</a>
             </section>

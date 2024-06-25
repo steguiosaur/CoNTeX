@@ -21,7 +21,7 @@
         <div class="container">
             <section class="form-section">
                 <h3>Create an Account</h3>
-                <form action="/login" method="post" class="form-box">
+                <form action="" method="POST" class="form-box">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required />
 
@@ -31,10 +31,52 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required />
 
-                    <button type="submit">Sign Up</button>
+                    <?php
+                    if (isset($_POST['submit'])) {
+                        $username = $_POST['username'];
+                        $email = $_POST['email'];
+                        $password = $_POST['password'];
+                        $errors = [];
+
+                        // username character minimum limit
+                        if (strlen($username) < 3) {
+                            $errors[] = "Username must be at least 3 characters long.";
+                        }
+
+                        // email filter for format
+                        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                            $errors[] = "Email format invalid.";
+                        }
+
+                        // password character minimum limit
+                        if (strlen($password) < 6) {
+                            $errors[] = "Password must be at least 6 characters long.";
+                        }
+
+                        // error checker
+                        if (empty($errors)) {
+                            // hash password for storing in the database
+                            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                            // Database connection and insertion logic here
+
+                            // redirect to login.php page after successful signup
+                            header("Location: login.php");
+                            exit();
+                        } else {
+                            // show all errors collected
+                            foreach ($errors as $error) {
+                                echo "<p style=\"color: red;\" class='error'>$error</p>";
+                            }
+                        }
+                    }
+                    ?>
+
+                    <button type="submit" name="submit">Sign Up</button>
                     <br />
                     <p>Already have an account? <a href="login.php">Sign In</a></p>
                 </form>
+
                 <a class="back-home" href="index.php">Back to Homepage</a>
             </section>
         </div>
