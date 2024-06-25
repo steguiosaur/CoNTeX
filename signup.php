@@ -58,11 +58,24 @@
                             // hash password for storing in the database
                             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                            // Database connection and insertion logic here
+                            // database connection and insertion logic here
+                            include("database/db_tables.php"); // create tables if not exist
+                            include("database/db_connect.php"); // establish connection
 
-                            // redirect to login.php page after successful signup
-                            header("Location: login.php");
-                            exit();
+                            // SQL statement preparation
+                            $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+                            if ($stmt === false) {
+                                die("Prepare failed: " . htmlspecialchars($conn->error));
+                            }
+
+                            // execute the statement
+                            $stmt->bind_param("sss", $username, $email, $hashed_password);
+                            if ($stmt->execute()) {
+                                header("Location: login.php");
+                                exit();
+                            }
+
+                            $stmt->close();
                         } else {
                             // show all errors collected
                             foreach ($errors as $error) {
