@@ -40,13 +40,13 @@
                         include("database/db_connect.php");
 
                         // retrieve user data based on username
-                        $stmt = $conn->prepare("SELECT id, username, password FROM users WHERE username = ?");
+                        $stmt = $conn->prepare("SELECT id, username, password, email, created_at FROM users WHERE username = ?");
                         if ($stmt === false) {
                             die("Prepare failed: " . htmlspecialchars($conn->error));
                         }
                         $stmt->bind_param("s", $username);
                         $stmt->execute();
-                        $stmt->bind_result($user_id, $db_username, $db_password);
+                        $stmt->bind_result($user_id, $db_username, $db_password, $email, $created_at);
                         $stmt->fetch();
 
                         // verify password and set session
@@ -54,6 +54,8 @@
                             // verification successful
                             $_SESSION['user_id'] = $user_id;
                             $_SESSION['username'] = $db_username;
+                            $_SESSION['email'] = $email;
+                            $_SESSION['created_at'] = $created_at;
 
                             header("Location: vault.php");
                             exit();
