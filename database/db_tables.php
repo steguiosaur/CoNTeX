@@ -12,12 +12,5 @@ $create_users_table = "CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
 
-// execute SQL statement
-if ($conn->query($create_users_table) === true) {
-    echo "Table 'users' created successfully or already exists.";
-} else {
-    echo "Error creating table: " . $conn->error;
-}
-
 // Close the connection
 $conn->close();

@@ -53,31 +53,49 @@
                             $errors[] = "Password must be at least 6 characters long.";
                         }
 
-                        // error checker
+                        // if no validation errors, proceed to database operations
                         if (empty($errors)) {
-                            // hash password for storing in the database
-                            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
                             // database connection and insertion logic here
                             include("database/db_tables.php"); // create tables if not exist
                             include("database/db_connect.php"); // establish connection
 
-                            // SQL statement preparation
-                            $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+                            // checks if username or email already exist
+                            $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
                             if ($stmt === false) {
                                 die("Prepare failed: " . htmlspecialchars($conn->error));
                             }
 
-                            // execute the statement
-                            $stmt->bind_param("sss", $username, $email, $hashed_password);
-                            if ($stmt->execute()) {
-                                header("Location: login.php");
-                                exit();
+                            $stmt->bind_param("ss", $username, $email);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            if ($result->num_rows > 0) {
+                                $errors[] = "Username or Email already exists.";
+                            } else {
+                                // hash password for storing in the database
+                                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                                // insert new user on database
+                                $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+                                if ($stmt === false) {
+                                    die("Prepare failed: " . htmlspecialchars($conn->error));
+                                }
+
+                                $stmt->bind_param("sss", $username, $email, $hashed_password);
+                                if ($stmt->execute()) {
+                                    header("Location: login.php");
+                                    exit();
+                                } else {
+                                    $errors[] = "Error inserting user: " . htmlspecialchars($stmt->error);
+                                }
                             }
 
                             $stmt->close();
-                        } else {
-                            // show all errors collected
+                            $conn->close();
+                        }
+
+                        // Display errors if any
+                        if (!empty($errors)) {
                             foreach ($errors as $error) {
                                 echo "<p style=\"color: red;\" class='error'>$error</p>";
                             }
