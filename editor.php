@@ -35,15 +35,18 @@
     <!-- Editor and previewer for LaTeX and Markdown -->
     <div class="editor">
         <div class="half-width">
-        <!-- Get default mesage on screen -->
         <?php
-        $file_path = "./README.md";
+        // Query database to get the first file it encounters from vault.
+        // If none, create an introductory README file.
+        $vault = "vault";
+        $file = "./README.md";
 
-        if (file_exists($file_path)) {
-            $file_contents = file_get_contents($file_path);
+        if (file_exists($file)) {
+            $file_contents = file_get_contents($file);
         }
         ?>
 
+        <!-- Load contents of the file to be edited -->
         <textarea class="inside-half-width" id="source-text" placeholder="Enter your text here"><?php
           echo htmlspecialchars($file_contents);
         ?></textarea>

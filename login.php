@@ -28,11 +28,12 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required />
 
-                    <a href="login.php">Forgot Password?</a>
+                    <p><input type="checkbox" id="remember-me" name="remember-me" /> Remember Me</p>
 
                     <button type="submit">Login</button>
                     <br />
                     <p>Didn't have an account? <a href="signup.php">Sign Up</a></p>
+
                 </form>
                 <a class="back-home" href="index.php">Back to Homepage</a>
             </section>
