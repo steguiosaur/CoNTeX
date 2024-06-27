@@ -404,6 +404,7 @@ body {
       padding: 10px;
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
 
       .profile-name {
@@ -428,6 +429,7 @@ body {
       color: var(--colorprimary);
       border: none;
       max-width: 300px;
+      margin-top: 10px;
 
       &:hover {
         filter: brightness(0.8);

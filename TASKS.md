@@ -33,7 +33,7 @@ A list of tasks that should be done on the project.
 
 **vault.php**:
 
-- [ ] fix CSS for profile banner
+- [x] fix CSS for profile banner
 - [ ] Create new vault function
 - [ ] Read database for created vaults
 - [ ] Update or rename vault name
@@ -50,4 +50,4 @@ A list of tasks that should be done on the project.
 - [ ] Group members
 - [ ] Github code link
 - [ ] License
-- [ ] Copyright
+- [x] Copyright

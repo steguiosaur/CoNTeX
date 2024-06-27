@@ -20,6 +20,7 @@ require "layouts/navbar.php";
 if (isset($_POST['username'], $_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $rememberMe = isset($_POST['remember-me']);
 
     include "database/db_connect.php";
 
@@ -40,6 +41,12 @@ if (isset($_POST['username'], $_POST['password'])) {
         $_SESSION['username'] = $db_username;
         $_SESSION['email'] = $email;
         $_SESSION['created_at'] = $created_at;
+
+        if ($rememberMe) {
+            // Set a cookie that expires in 30 days
+            $cookie_value = base64_encode(json_encode(['username' => $username, 'token' => bin2hex(random_bytes(16))]));
+            setcookie('remember_me', $cookie_value, time() + (30 * 24 * 60 * 60), "/");
+        }
 
         header("Location: vault.php");
         exit();
