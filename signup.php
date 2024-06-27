@@ -1,114 +1,97 @@
-<!doctype html>
-<html lang="en">
+<?php
+include 'layouts/header.php';
+include 'layouts/navbar.php';
+?>
 
-<head>
-    <title>CoNTeX</title>
-    <link rel="icon" type="image/png" href="img/ctx-sq-light.png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="css/style.css" rel="stylesheet" />
-</head>
+<div class="main">
+    <div class="container">
+        <section class="form-section">
+            <h3>Create an Account</h3>
+            <form action="" method="POST" class="form-box">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
 
-<body>
-    <nav>
-        <div class="container navbar">
-            <a href="index.php" id="logo-name">
-                <img id="logo-img" src="img/ctx-light.png" alt="CoNTeX logo" />CoNTeX</a>
-        </div>
-    </nav>
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" required />
 
-    <div class="main">
-        <div class="container">
-            <section class="form-section">
-                <h3>Create an Account</h3>
-                <form action="" method="POST" class="form-box">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required />
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required />
 
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" required />
+<?php
+if (isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $errors = [];
 
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required />
+    // username character minimum limit
+    if (strlen($username) < 3) {
+        $errors[] = "Username must be at least 3 characters long.";
+    }
 
-                    <?php
-                    if (isset($_POST['submit'])) {
-                        $username = $_POST['username'];
-                        $email = $_POST['email'];
-                        $password = $_POST['password'];
-                        $errors = [];
+    // email filter for format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Email format invalid.";
+    }
 
-                        // username character minimum limit
-                        if (strlen($username) < 3) {
-                            $errors[] = "Username must be at least 3 characters long.";
-                        }
+    // password character minimum limit
+    if (strlen($password) < 6) {
+        $errors[] = "Password must be at least 6 characters long.";
+    }
 
-                        // email filter for format
-                        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                            $errors[] = "Email format invalid.";
-                        }
+    // if no validation errors, proceed to database operations
+    if (empty($errors)) {
+        // database connection and insertion logic here
+        include("database/db_tables.php"); // create tables if not exist
+        include("database/db_connect.php"); // establish connection
 
-                        // password character minimum limit
-                        if (strlen($password) < 6) {
-                            $errors[] = "Password must be at least 6 characters long.";
-                        }
+        // checks if username or email already exist
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
+        $stmt->bind_param("ss", $username, $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-                        // if no validation errors, proceed to database operations
-                        if (empty($errors)) {
-                            // database connection and insertion logic here
-                            include("database/db_tables.php"); // create tables if not exist
-                            include("database/db_connect.php"); // establish connection
+        if ($result->num_rows > 0) {
+            $errors[] = "Username or Email already exists.";
+        } else {
+            // hash password for storing in the database
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                            // checks if username or email already exist
-                            $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
-                            $stmt->bind_param("ss", $username, $email);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
+            // insert new user on database
+            $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $username, $email, $hashed_password);
 
-                            if ($result->num_rows > 0) {
-                                $errors[] = "Username or Email already exists.";
-                            } else {
-                                // hash password for storing in the database
-                                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            if ($stmt->execute()) {
+                header("Location: login.php");
+                exit();
+            } else {
+                $errors[] = "Error inserting user: " . htmlspecialchars($stmt->error);
+            }
+        }
 
-                                // insert new user on database
-                                $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-                                $stmt->bind_param("sss", $username, $email, $hashed_password);
+        $stmt->close();
+        $conn->close();
+    }
 
-                                if ($stmt->execute()) {
-                                    header("Location: login.php");
-                                    exit();
-                                } else {
-                                    $errors[] = "Error inserting user: " . htmlspecialchars($stmt->error);
-                                }
-                            }
+    // display errors if any
+    if (!empty($errors)) {
+        foreach ($errors as $error) {
+            echo "<p style=\"color: red;\" class='error'>$error</p>";
+        }
+    }
+}
+?>
 
-                            $stmt->close();
-                            $conn->close();
-                        }
+                <button type="submit" name="submit">Sign Up</button>
+                <br />
+                <p>Already have an account? <a href="login.php">Sign In</a></p>
+            </form>
 
-                        // display errors if any
-                        if (!empty($errors)) {
-                            foreach ($errors as $error) {
-                                echo "<p style=\"color: red;\" class='error'>$error</p>";
-                            }
-                        }
-                    }
-                    ?>
-
-                    <button type="submit" name="submit">Sign Up</button>
-                    <br />
-                    <p>Already have an account? <a href="login.php">Sign In</a></p>
-                </form>
-
-                <a class="back-home" href="index.php">Back to Homepage</a>
-            </section>
-        </div>
+            <a class="back-home" href="index.php">Back to Homepage</a>
+        </section>
     </div>
+</div>
 
-    <footer>
-        <div class="container">&copy CoNTeX 2024. All Rights Reserved.</div>
-    </footer>
-</body>
-
-</html>
+<?php
+include 'layouts/footer.php';
+?>

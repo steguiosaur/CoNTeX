@@ -1,77 +1,59 @@
-<!doctype html>
-<html lang="en">
+<?php
+include 'layouts/header.php';
+include 'layouts/navbar.php';
+?>
 
-<head>
-    <title>CoNTeX</title>
-    <link rel="icon" type="image/png" href="img/ctx-sq-light.png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="css/style.css" rel="stylesheet" />
-</head>
+<div class="main">
+    <div class="container">
+        <div class="banner">
 
-<body>
-    <nav>
-        <div class="container navbar">
-            <a href="index.php" id="logo-name">
-                <img id="logo-img" src="img/ctx-light.png" alt="CoNTeX logo" />CoNTeX</a>
+<?php
+
+// check if user is logged in
+if (!isset($_SESSION['username'])) {
+    // redirect to login page if not logged in
+    header("Location: login.php");
+    exit();
+}
+
+// session variables
+$username = $_SESSION['username'];
+$email = $_SESSION['email'];
+$user_id = $_SESSION['user_id'];
+$join_year = $_SESSION['created_at'];
+
+// example profile picture URL only (replace with actual path)
+$profile_picture = "img/account.png";
+?>
+
+            <img class="profile-img" src="<?php echo $profile_picture; ?>" alt="Profile Picture" />
+            <div class="profile-info">
+                <h4 class="profile-name"><?php echo $username; ?></h4>
+                <p>ID: <?php echo $user_id; ?></p>
+                <p>Email: <?php echo $email; ?></p>
+                <p>Joined <?php echo $join_year; ?></p>
+                <form action="utils/session_out.php" method="POST">
+                    <button type="submit" name="logout">Sign Out</button>
+                </form>
+            </div>
         </div>
-    </nav>
-
-    <div class="main">
-        <div class="container">
-            <div class="banner">
-
-                <?php
-                session_start();
-
-                // check if user is logged in
-                if (!isset($_SESSION['username'])) {
-                    // redirect to login page if not logged in
-                    header("Location: login.php");
-                    exit();
-                }
-
-                // session variables
-                $username = $_SESSION['username'];
-                $email = $_SESSION['email'];
-                $user_id = $_SESSION['user_id'];
-                $join_year = $_SESSION['created_at'];
-
-                // example profile picture URL only (replace with actual path)
-                $profile_picture = "img/account.png";
-                ?>
-
-                <img class="profile-img" src="<?php echo $profile_picture; ?>" alt="Profile Picture" />
-                <div class="profile-info">
-                    <h4 class="profile-name"><?php echo $username; ?></h4>
-                    <p>ID: <?php echo $user_id; ?></p>
-                    <p>Email: <?php echo $email; ?></p>
-                    <p>Joined <?php echo $join_year; ?></p>
-                    <form action="utils/session_out.php" method="POST">
-                        <button type="submit" name="logout">Sign Out</button>
-                    </form>
-                </div>
-            </div>
-            <div class="vaults">
-                <h4>Your Vault</h4>
-                <section class="vault-section">
-                    <button class="btn-outline" type="button">Add Vault</button>
-                    <button class="btn-fill" type="button">Add Vault</button>
-                    <button class="btn-fill" type="button">Add Vault</button>
-                    <button class="btn-fill" type="button">Add Vault</button>
-                </section>
-                <h4>Other Vault</h4>
-                <section class="vault-section">
-                    <button class="btn-fill" type="button">Add Vault</button>
-                    <button class="btn-fill" type="button">Add Vault</button>
-                </section>
-            </div>
+        <div class="vaults">
+            <h4>Your Vault</h4>
+            <section class="vault-section">
+                <button class="btn-outline" type="button">Add Vault</button>
+                <button class="btn-fill" type="button">Add Vault</button>
+                <button class="btn-fill" type="button">Add Vault</button>
+                <button class="btn-fill" type="button">Add Vault</button>
+            </section>
+            <h4>Other Vault</h4>
+            <section class="vault-section">
+                <button class="btn-fill" type="button">Add Vault</button>
+                <button class="btn-fill" type="button">Add Vault</button>
+            </section>
         </div>
     </div>
+</div>
 
-    <footer>
-        <div class="container">&copy CoNTeX 2024. All Rights Reserved.</div>
-    </footer>
-</body>
-
-</html>
+<?php
+include 'layouts/footer.php';
+?>
