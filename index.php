@@ -41,11 +41,10 @@ if (!isset($_SESSION['username'])) {
             <div class="feature-section">
                 <div class="feature-content">
                     <h6>Edit with Markdown, LaTeX, and UML</h6>
-                    <p>All in one editor for Markdown, LaTeX, and UML.</p>
+                    <p>All in one editor for Markdown, LaTeX, and UML</p>
                 </div>
                 <div class="feature-image">
-                    <!-- Placeholder for image -->
-                    <div class="image-placeholder"></div>
+                    <img class="image-placeholder" src="img/mdumllatex.svg" alt="" />
                 </div>
             </div>
 
@@ -58,8 +57,7 @@ if (!isset($_SESSION['username'])) {
                     </p>
                 </div>
                 <div class="feature-image">
-                    <!-- Placeholder for image -->
-                    <div class="image-placeholder"></div>
+                    <img class="image-placeholder" src="img/skip-connection.svg" alt="" />
                 </div>
             </div>
 
@@ -68,12 +66,11 @@ if (!isset($_SESSION['username'])) {
                     <h6>Live rendering</h6>
                     <p>
                         No manual compilation needed, write your stuff and see the
-                        changes in real time.
+                        changes in real time
                     </p>
                 </div>
                 <div class="feature-image">
-                    <!-- Placeholder for image -->
-                    <div class="image-placeholder"></div>
+                    <img class="image-placeholder" src="img/bayes.svg" alt="" />
                 </div>
             </div>
 
@@ -83,8 +80,7 @@ if (!isset($_SESSION['username'])) {
                     <p>Collaborate and share progress with teams</p>
                 </div>
                 <div class="feature-image">
-                    <!-- Placeholder for image -->
-                    <div class="image-placeholder"></div>
+                    <img class="image-placeholder" src="img/team-icon.svg" alt="" />
                 </div>
             </div>
         </section>
