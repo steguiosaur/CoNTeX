@@ -1,5 +1,8 @@
 <?php
 
+// Always close the connection when this script is included. Use the code below:
+// $conn->close();
+
 // change values if necessary
 $servername = "localhost"; // or database server name
 $dbusername = "root"; // database username (recommend not to use root)

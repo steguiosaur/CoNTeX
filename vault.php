@@ -47,7 +47,7 @@
                     <p>ID: <?php echo $user_id; ?></p>
                     <p>Email: <?php echo $email; ?></p>
                     <p>Joined <?php echo $join_year; ?></p>
-                    <form action="index.php" method="POST">
+                    <form action="utils/session_out.php" method="POST">
                         <button type="submit" name="logout">Sign Out</button>
                     </form>
                 </div>

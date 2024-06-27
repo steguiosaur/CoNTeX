@@ -10,10 +10,15 @@
 </head>
 
 <body>
+    <?php
+    session_start();
+    ?>
     <nav>
         <div class="container navbar">
             <a href="index.php" id="logo-name">
                 <img id="logo-img" src="img/ctx-light.png" alt="CoNTeX logo" />CoNTeX</a>
+            <div id="account-session">
+            </div>
         </div>
     </nav>
 
@@ -30,10 +35,12 @@
                                 Collaborate expression heavy documents without lifting<br />
                                 away from the keyboard.
                             </p>
-                            <a href="signup.php">
-                                <button class="btn-fill" type="button">Sign Up</button></a>
-                            <a href="login.php">
-                                <button class="btn-outline" type="button">Login</button></a>
+    <?php
+        if (!isset($_SESSION['username'])) {
+            echo "<a href=\"signup.php\"><button class=\"btn-fill\" type=\"button\">Sign Up</button></a>";
+            echo "<a href=\"login.php\"><button class=\"btn-outline\" type=\"button\">Login</button></a>";
+        }
+    ?>
                         </div>
                         <img width="300px" height="auto" src="img/branchnbound.svg" alt="" />
                     </div>
