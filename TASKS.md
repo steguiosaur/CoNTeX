@@ -27,7 +27,7 @@ A list of tasks that should be done on the project.
 
 **login.php**:
 
-- [ ] remember me cookies
+- [x] remember me cookies
 - [ ] forgot password page
 - [ ] login through username or email account
 
