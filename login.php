@@ -43,7 +43,7 @@ if (isset($_POST['username'], $_POST['password'])) {
         $_SESSION['created_at'] = $created_at;
 
         if ($rememberMe) {
-            // Set a cookie that expires in 30 days
+            // set 30 day cookie for remember me
             $cookie_value = base64_encode(json_encode(['username' => $username, 'token' => bin2hex(random_bytes(16))]));
             setcookie('remember_me', $cookie_value, time() + (30 * 24 * 60 * 60), "/");
         }

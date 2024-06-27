@@ -2,6 +2,14 @@
 
 A list of tasks that should be done on the project.
 
+**vault.php**:
+
+- [x] fix CSS for profile banner
+- [ ] Create new vault function
+- [ ] Read database for created vaults
+- [ ] Update or rename vault name
+- [ ] Delete Vault and its contents
+
 **editor.php unfixed features**:
 
 - [ ] Enable parsing for UML diagrams
@@ -19,25 +27,11 @@ A list of tasks that should be done on the project.
 - [ ] Auto save on server the contents of textarea on some interval or when exit
 - [ ] Auto fix merge conflict for collaborative editing
 
-**index.php**:
-
-- [x] Create images for the project feature section
-- [x] Navbar display current session username and profile picture
-- [x] If no session, navbar show login and signup button (optional)
-
 **login.php**:
 
 - [x] remember me cookies
 - [ ] forgot password page
 - [ ] login through username or email account
-
-**vault.php**:
-
-- [x] fix CSS for profile banner
-- [ ] Create new vault function
-- [ ] Read database for created vaults
-- [ ] Update or rename vault name
-- [ ] Delete Vault and its contents
 
 **README.md**:
 
@@ -51,3 +45,9 @@ A list of tasks that should be done on the project.
 - [ ] Github code link
 - [ ] License
 - [x] Copyright
+
+**index.php**:
+
+- [x] Create images for the project feature section
+- [x] Navbar display current session username and profile picture
+- [x] If no session, navbar show login and signup button (optional)

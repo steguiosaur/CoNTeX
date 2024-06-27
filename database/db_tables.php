@@ -12,8 +12,7 @@ $create_users_table = "CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
 
-$stmt = $conn->prepare($create_users_table);
-$stmt->execute();
+$conn->query($create_users_table);
 
 // Close the connection
 $conn->close();

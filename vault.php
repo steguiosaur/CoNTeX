@@ -41,14 +41,14 @@ $profile_picture = "img/account.png";
             <h4>Your Vault</h4>
             <section class="vault-section">
                 <button class="btn-outline" type="button">Add Vault</button>
-                <button class="btn-fill" type="button">Add Vault</button>
-                <button class="btn-fill" type="button">Add Vault</button>
-                <button class="btn-fill" type="button">Add Vault</button>
+                <button class="btn-fill" type="button">Machine Learning</button>
+                <button class="btn-fill" type="button">Cybersecurity</button>
+                <button class="btn-fill" type="button">Software Engineering</button>
             </section>
             <h4>Other Vault</h4>
             <section class="vault-section">
-                <button class="btn-fill" type="button">Add Vault</button>
-                <button class="btn-fill" type="button">Add Vault</button>
+                <button class="btn-fill" type="button">WebDev</button>
+                <button class="btn-fill" type="button">Thesis</button>
             </section>
         </div>
     </div>
