@@ -91,8 +91,8 @@ if (!isset($_SESSION['username'])) {
     </div>
 </div>
 
-<script src="js/homescroll.js"></script>
-
 <?php
 include 'layouts/footer.php';
 ?>
+
+<script src="js/homescroll.js"></script>
