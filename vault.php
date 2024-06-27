@@ -1,6 +1,6 @@
 <?php
-include 'layouts/header.php';
-include 'layouts/navbar.php';
+require 'layouts/header.php';
+require 'layouts/navbar.php';
 ?>
 
 <div class="main">
@@ -55,5 +55,5 @@ $profile_picture = "img/account.png";
 </div>
 
 <?php
-include 'layouts/footer.php';
+require 'layouts/footer.php';
 ?>

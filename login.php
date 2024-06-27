@@ -1,6 +1,6 @@
 <?php
-include 'layouts/header.php';
-include 'layouts/navbar.php';
+require "layouts/header.php";
+require "layouts/navbar.php";
 ?>
 
 <div class="main">
@@ -21,7 +21,7 @@ if (isset($_POST['username'], $_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    include("database/db_connect.php");
+    include "database/db_connect.php";
 
     // retrieve user data based on username
     $stmt = $conn->prepare("SELECT id, username, password, email, created_at FROM users WHERE username = ?");
@@ -62,5 +62,5 @@ if (isset($_POST['username'], $_POST['password'])) {
 </div>
 
 <?php
-include 'layouts/footer.php';
+require "layouts/footer.php";
 ?>

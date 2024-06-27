@@ -1,6 +1,6 @@
 <?php
-include 'layouts/header.php';
-include 'layouts/navbar.php';
+require "layouts/header.php";
+require "layouts/navbar.php";
 ?>
 
 <div class="main">
@@ -42,8 +42,8 @@ if (isset($_POST['submit'])) {
     // if no validation errors, proceed to database operations
     if (empty($errors)) {
         // database connection and insertion logic here
-        include("database/db_tables.php"); // create tables if not exist
-        include("database/db_connect.php"); // establish connection
+        include "database/db_tables.php"; // create tables if not exist
+        include "database/db_connect.php"; // establish connection
 
         // checks if username or email already exist
         $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
@@ -62,11 +62,13 @@ if (isset($_POST['submit'])) {
             $stmt->bind_param("sss", $username, $email, $hashed_password);
 
             if ($stmt->execute()) {
+                $stmt->close();
+                $conn->close();
                 header("Location: login.php");
                 exit();
-            } else {
-                $errors[] = "Error inserting user: " . htmlspecialchars($stmt->error);
             }
+
+            $errors[] = "Error inserting user: " . htmlspecialchars($stmt->error);
         }
 
         $stmt->close();
@@ -81,7 +83,6 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-
                 <button type="submit" name="submit">Sign Up</button>
                 <br />
                 <p>Already have an account? <a href="login.php">Sign In</a></p>
@@ -93,5 +94,5 @@ if (isset($_POST['submit'])) {
 </div>
 
 <?php
-include 'layouts/footer.php';
+require "layouts/footer.php";
 ?>

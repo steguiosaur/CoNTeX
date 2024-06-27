@@ -1,6 +1,6 @@
 <?php
-include 'layouts/header.php';
-include 'layouts/navbar.php';
+require 'layouts/header.php';
+require 'layouts/navbar.php';
 ?>
 
 <button id="scroll-top-btn" title="Go to top">^</button>
@@ -92,7 +92,7 @@ if (!isset($_SESSION['username'])) {
 </div>
 
 <?php
-include 'layouts/footer.php';
+require 'layouts/footer.php';
 ?>
 
 <script src="js/homescroll.js"></script>
