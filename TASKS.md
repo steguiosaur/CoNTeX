@@ -21,9 +21,9 @@ A list of tasks that should be done on the project.
 
 **index.php**:
 
-- [ ] Create images for the project feature section
-- [ ] Navbar display current session username and profile picture
-- [ ] If no session, navbar show login and signup button (optional)
+- [x] Create images for the project feature section
+- [x] Navbar display current session username and profile picture
+- [x] If no session, navbar show login and signup button (optional)
 
 **login.php**:
 

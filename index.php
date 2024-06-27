@@ -21,6 +21,8 @@ require 'layouts/navbar.php';
 if (!isset($_SESSION['username'])) {
     echo "<a href=\"signup.php\"><button class=\"btn-fill\" type=\"button\">Sign Up</button></a>";
     echo "<a href=\"login.php\"><button class=\"btn-outline\" type=\"button\">Login</button></a>";
+} else {
+    echo "<a href=\"vault.php\"><button class=\"btn-fill\" style=\"width: 100%; margin-right: 0px;\" type=\"button\">Enter Vault</button></a>";
 }
 ?>
                     </div>
@@ -52,7 +54,7 @@ if (!isset($_SESSION['username'])) {
                 <div class="feature-content">
                     <h6>Extended LaTeX compilation</h6>
                     <p>
-                        Not limiting towards compileable LaTeX code compared to
+                        Nonlimiting towards compileable LaTeX code compared to
                         StackEdit, Obsidian, etc. that are reliant on MathJax
                     </p>
                 </div>
