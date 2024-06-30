@@ -8,12 +8,11 @@ require 'layouts/navbar.php';
         <div class="banner">
 
 <?php
-
 // check if user is logged in
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['user_id'])) {
     // redirect to login page if not logged in
-    header("Location: login.php");
-    exit();
+    header('Location: login.php');
+    exit;
 }
 
 // session variables
@@ -23,7 +22,7 @@ $user_id = $_SESSION['user_id'];
 $join_year = $_SESSION['created_at'];
 
 // example profile picture URL only (replace with actual path)
-$profile_picture = "img/account.png";
+$profile_picture = 'img/account.png';
 ?>
 
             <img class="profile-img" src="<?php echo $profile_picture; ?>" alt="Profile Picture" />
@@ -32,7 +31,7 @@ $profile_picture = "img/account.png";
                 <p>ID: <?php echo $user_id; ?></p>
                 <p>Email: <?php echo $email; ?></p>
                 <p>Joined <?php echo $join_year; ?></p>
-                <form action="utils/session_out.php" method="POST">
+                <form action="sessions/session_out.php" method="POST">
                     <button type="submit" name="logout">Sign Out</button>
                 </form>
             </div>
@@ -54,6 +53,4 @@ $profile_picture = "img/account.png";
     </div>
 </div>
 
-<?php
-require 'layouts/footer.php';
-?>
+<?php require 'layouts/footer.php'; ?>
