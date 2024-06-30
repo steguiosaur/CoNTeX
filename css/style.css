@@ -387,11 +387,23 @@ body {
   }
 
   /* vault config */
+  .contain-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: top;
+    min-height: calc(100vh - 50px);
+  }
+
   .banner {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    flex: 1 1 30%;
+    max-width: 300px;
 
     .profile-img {
       width: 200px;
@@ -444,6 +456,7 @@ body {
   .vaults {
     display: flex;
     flex-direction: column;
+    flex: 1 1 70%;
 
     h4 {
       margin: 10px 0;
@@ -459,6 +472,9 @@ body {
       border-radius: 5px;
       width: auto;
       height: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       &:hover {
         filter: brightness(0.8);
@@ -493,11 +509,97 @@ body {
       .vault-section {
         grid-template-columns: repeat(2, 1fr);
       }
+
+      .contain-row {
+        flex-direction: column;
+      }
+
+      .banner {
+        order: 1;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .vaults {
+        order: 2;
+        width: 100%;
+        max-width: 100%;
+      }
     }
 
     @media (max-width: 600px) {
       .vault-section {
         grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+
+    .modal-content {
+      background-color: var(--colorprimary);
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+      max-width: 500px;
+      border-radius: 10px;
+
+      .modal-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .modal-body {
+        display: flex;
+        flex-direction: column;
+
+        #vault-name {
+          font: var(--text);
+          padding: 10px;
+          box-sizing: border-box;
+          border: 2px solid var(--colorsecondary);
+          border-radius: 5px;
+          width: 100%;
+          margin-bottom: 20px;
+        }
+      }
+
+      .modal-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+
+        .btn-create,
+        .btn-cancel {
+          padding: 10px 20px;
+          cursor: pointer;
+          box-sizing: border-box;
+          border-radius: 5px;
+          width: 48%;
+          font: var(--button-text);
+        }
+
+        .btn-create {
+          background-color: var(--colorsecondary);
+          color: var(--colorprimary);
+          border: none;
+        }
+
+        .btn-cancel {
+          background-color: var(--colorprimary);
+          border: 4px solid var(--colorsecondary);
+          color: var(--colorsecondary);
+        }
       }
     }
   }
