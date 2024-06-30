@@ -41,7 +41,10 @@ Assuming the project would be ran using [XAMPP](https://www.apachefriends.org/):
    sudo /opt/lampp/lampp start
    ```
 
-3. Access the webpage on [http://localhost/CoNTeX/index.php](http://localhost/CoNTeX/index.php)
+3. Visit import page of [http://localhost/phpmyadmin](http://localhost/phpmyadmin/index.php?route=/server/import)
+   and import the file `db/setup_databast.sql` to setup the database.
+
+4. Access the webpage on [http://localhost/CoNTeX/index.php](http://localhost/CoNTeX/index.php)
 
 ## Overall Planned Features
 
@@ -93,7 +96,7 @@ accessible through the dollar symbol.
 | `![alt text](url)`   | Image                              |
 | `> quote`            | Blockquote                         |
 | `\`code\``           | Inline code                        |
-| `\`\`\`code\`\`\``   | Code block with backticks          |
+| ` \`\`\`code\`\`\` ` | Code block with backticks          |
 | `---`                | Horizontal rule using dashes       |
 | `___`                | Horizontal rule using underscores  |
 | `***`                | Horizontal rule using asterisks    |
