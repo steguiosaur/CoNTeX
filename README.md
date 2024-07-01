@@ -42,7 +42,7 @@ Assuming the project would be ran using [XAMPP](https://www.apachefriends.org/):
    ```
 
 3. Visit import page of [http://localhost/phpmyadmin](http://localhost/phpmyadmin/index.php?route=/server/import)
-   and import the file `db/setup_databast.sql` to setup the database.
+   and import the file `db/setup_database.sql` to setup the database.
 
 4. Access the webpage on [http://localhost/CoNTeX/index.php](http://localhost/CoNTeX/index.php)
 
