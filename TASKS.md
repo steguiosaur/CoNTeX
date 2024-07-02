@@ -14,7 +14,7 @@ A list of tasks that should be done on the project.
 
 - [ ] Enable parsing for UML diagrams
 - [ ] Syntax highlighting
-- [ ] Auto pair parenthesis
+- [x] Auto pair parenthesis
 - [ ] Fix regex based parser to having an AST before rendering
 - [ ] Synchonized the scroll directly to particular line
 - [ ] Implement file tree for all notes

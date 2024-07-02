@@ -56,6 +56,7 @@ Assuming the project would be ran using [XAMPP](https://www.apachefriends.org/):
 
 ### v0.2.0 Features
 
+- [x] Responsive design for mobile users
 - [x] Account system
 - [x] Developed profile page
 - [x] Vault creation for storing related files
