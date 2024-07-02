@@ -55,7 +55,10 @@ $conn->close();
                 <section class="vault-section">
                     <button class="btn-outline" id="add-vault-btn" type="button">Add Vault</button>
                     <?php foreach ($user_vaults as $vault): ?>
-                        <button class="btn-fill" type="button"><?php echo htmlspecialchars($vault['name']); ?></button>
+                    <form class="vault-form" action="editor.php" method="GET">
+                        <input type="hidden" name="vault_id" value="<?php echo htmlspecialchars($vault['vault_id']); ?>">
+                        <button class="btn-fill" type="submit"><?php echo htmlspecialchars($vault['name']); ?></button>
+                    </form>
                     <?php endforeach; ?>
                 </section>
                 <h4>Other Vault</h4>

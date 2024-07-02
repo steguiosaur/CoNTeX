@@ -5,8 +5,8 @@ A list of tasks that should be done on the project.
 **vault.php**:
 
 - [x] fix CSS for profile banner
-- [ ] Create new vault function
-- [ ] Read database for created vaults
+- [x] Create new vault function
+- [x] Read database for created vaults
 - [ ] Update or rename vault name
 - [ ] Delete Vault and its contents
 
