@@ -69,7 +69,7 @@
   --h4: bold 23px var(--ff);
   --h5: bold 20px var(--ff);
   --h6: bold 18px var(--ff);
-  --subtext: 12px/20px var(--ff);
+  --subtext: 12px/20px var(--ffcode);
 }
 
 #render-text {

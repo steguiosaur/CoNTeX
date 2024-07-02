@@ -60,5 +60,6 @@
 
 <script src="js/parser.js"></script>
 <script src="js/editor.js"></script>
+<script src="js/autopairs.js"></script>
 
 </html>

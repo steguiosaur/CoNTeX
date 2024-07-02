@@ -55,7 +55,7 @@ const codeBlockReplacer = function(fullMatch) {
 }
 
 const inlineCodeReplacer = function(fullMatch, tagStart, tagContents) {
-    return '<code>' + tagContents + '</code>';
+    return '<code style="font: var(--ffcode); background-color: #DDDDDD;">' + tagContents + '</code>';
 }
 
 const imageReplacer = function(fullMatch, tagTitle, tagURL) {

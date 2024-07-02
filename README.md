@@ -56,8 +56,11 @@ Assuming the project would be ran using [XAMPP](https://www.apachefriends.org/):
 
 ### v0.2.0 Features
 
-- [ ] Syntax highlighting on editor
-- [ ] Auto-pairing for brackets, parenthesis, and other delimiters
+- [x] Account system
+- [x] Developed profile page
+- [x] Vault creation for storing related files
+- [x] Remember sessions for each user
+- [x] Auto-pairing for brackets, parenthesis, and other delimiters
 
 ### v0.1.0 Features
 
@@ -67,6 +70,14 @@ Assuming the project would be ran using [XAMPP](https://www.apachefriends.org/):
 - [x] Scroll synchronization on `<textarea>` and `<previewer>`
 - [x] Markdown parser
 - [x] $\LaTeX$ parser
+
+### Future Development
+
+- [ ] UML Diagram
+- [ ] Syntax highlighting on editor
+- [ ] Vault sharing for collaborative editing
+- [ ] File-tree for Current Notes in the Vault
+- [ ] Notes vault sharing for collaborative editing
 
 ## User Guide
 
@@ -95,8 +106,8 @@ accessible through the dollar symbol.
 | `[link](url)`        | Hyperlink                          |
 | `![alt text](url)`   | Image                              |
 | `> quote`            | Blockquote                         |
-| `\`code\``           | Inline code                        |
-| ` \`\`\`code\`\`\` ` | Code block with backticks          |
+| `` ` code ` ``       | Inline code                        |
+| ` ``` code ``` `     | Code block with backticks          |
 | `---`                | Horizontal rule using dashes       |
 | `___`                | Horizontal rule using underscores  |
 | `***`                | Horizontal rule using asterisks    |
