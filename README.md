@@ -1,6 +1,21 @@
-# CoNTeX
+<div align="center">
+![CoNTeX Logo](img/ctx-light.png#gh-dark-mode-only)
+![CoNTeX Logo](img/ctx-dark.png#gh-light-mode-only)
+</div>
+
+## Description
 
 Collaborative note-taking web app with Markdown and $\LaTeX$ syntax
+
+## Screenshots
+
+<details>
+  <summary>Screenshots</summary>
+    <img src="./img/Screenshot CoNTeX Editor" alt="Editor Page">
+    <img src="./img/Screenshot CoNTeX Home" alt="Home Page">
+    <img src="./img/Screenshot CoNTeX SignUp" alt="SignUp Page">
+    <img src="./img/Screenshot CoNTeX Login" alt="Login Page">
+</details>
 
 ## Installation and Setup
 

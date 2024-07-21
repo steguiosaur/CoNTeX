@@ -35,8 +35,8 @@ A list of tasks that should be done on the project.
 
 **README.md**:
 
-- [ ] Steps to execute on current device
-- [ ] Clarify the tutorial
+- [x] Steps to execute on current device
+- [x] Clarify the tutorial
 - [ ] License
 
 **footer.php**:
