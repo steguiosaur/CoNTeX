@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("/fonts/inter/Inter-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 400;
+  src: local(""), url("/fonts/inter/Inter-Italic.ttf");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""), url("/fonts/inter/Inter-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 700;
+  src: local(""), url("/fonts/inter/Inter-BoldItalic.ttf");
+}
+
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""), url("/fonts/jetbrains/JetBrainsMonoNerdFont-Regular.ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: italic;
+  font-weight: 400;
+  src: local(""), url("/fonts/jetbrains/JetBrainsMonoNerdFont-Italic.ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""), url("/fonts/jetbrains/JetBrainsMonoNerdFont-Bold.ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: italic;
+  font-weight: 700;
+  src: local(""), url("/fonts/jetbrains/JetBrainsMonoNerdFont-BoldItalic.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* border: 1px solid red; */
+}

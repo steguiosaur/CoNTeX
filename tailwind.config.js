@@ -19,4 +19,18 @@ export default {
     },
 
     plugins: [forms],
+    theme: {
+        extend: {
+            colors: {
+                lightest: '#f2f2f2',
+                darkest: '#202020',
+                darker: '#555555',
+                lighter: '#dddddd',
+            },
+            fontFamily: {
+                inter: ['"Inter"', 'sans-serif'],
+                jetbrains: ['"JetBrains"', 'monospace'],
+            },
+        },
+    },
 };
