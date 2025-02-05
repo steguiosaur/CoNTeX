@@ -1,11 +1,9 @@
-<script>
-export default {
-
-}
+<script scope>
+import AppLayout from '@/Layouts/AppLayout.vue';
 </script>
 
 <template>
-    <div>
-
-    </div>
+    <AppLayout>
+        <p>Hello Vaults</p>
+    </AppLayout>
 </template>

@@ -1,13 +1,16 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head, router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBar from '@/Components/NavBar.vue';
 import GoToTopButton from '@/Components/GoToTopButton.vue';
 import Footer from '@/Components/Footer.vue';
 
-const goToRegister = () => router.get(route('register'));
-const goToLogin = () => router.get(route('login'));
+const user = usePage().props.auth.user;
+
+const goToRegister = () => { router.get(route('register')); };
+const goToLogin = () => { router.get(route('login')); };
+const goToVault = () => { router.get(route('vaults')); };
 
 const smoothScrollToContent = (target) => {
     const targetSection = document.querySelector(target);
@@ -43,16 +46,23 @@ const smoothScrollToContent = (target) => {
                             away from the keyboard
                         </p>
                         <div class="flex md:flex-row gap-4">
-                            <button @click="goToRegister" class="bg-darkest text-white px-8 py-3
-                                border-4 border-darkest
-                                hover:brightness-50 transition font-bold">
-                                Sign Up
-                            </button>
-                            <button @click="goToLogin" class="bg-lightest text-darkest px-10 py-3
-                                border-4 border-darkest
-                                hover:brightness-50 transition font-bold">
-                                Login
-                            </button>
+                            <template v-if="!user">
+                                <button @click="goToRegister"
+                                    class="bg-darkest text-white px-8 py-3 border-4 border-darkest hover:brightness-50 transition font-bold">
+                                    Sign Up
+                                </button>
+                                <button @click="goToLogin"
+                                    class="bg-lightest text-darkest px-10 py-3 border-4 border-darkest hover:brightness-50 transition font-bold">
+                                    Login
+                                </button>
+                            </template>
+
+                            <template v-else>
+                                <button @click="goToVault"
+                                    class="w-full bg-darkest text-white px-8 py-3 border-4 border-darkest hover:brightness-50 transition font-bold">
+                                    Enter Vault
+                                </button>
+                            </template>
                         </div>
                     </div>
                 </div>
