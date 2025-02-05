@@ -9,20 +9,28 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
     ]);
-});
+})->name('home');
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+Route::get('/login', function () {
+    return Inertia::render('Login');
+})->name('login');
+
+Route::get('/register', function () {
+    return Inertia::render('register');
+})->name('register');
 
 Route::get('/profile', function () {
     return Inertia::render('ProfilePage');
 })->middleware(['auth', 'verified'])->name('profile');
+
+Route::get('/vaults', function () {
+    return Inertia::render('VaultsPage');
+})->middleware(['auth', 'verified'])->name('vaults');
+
+Route::get('/editor', function () {
+    return Inertia::render('EditorPage');
+})->middleware(['auth', 'verified'])->name('editor');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -30,4 +38,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

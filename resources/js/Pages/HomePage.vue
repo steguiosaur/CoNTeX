@@ -1,41 +1,43 @@
-<script>
-export default {
-    name: "HomePage",
-    data() {
-        return {
-            currentYear: `2024-${new Date().getFullYear()}`,
-            showButton: false,
-        };
-    },
-    methods: {
-        smoothScrollToContent(target) {
-            const targetSection = document.querySelector(target);
-            window.scrollTo({
-                top: targetSection.offsetTop,
-                behavior: "smooth",
-            });
-        },
-        scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
-        },
-        handleScroll() {
-            this.showButton = window.scrollY > 20;
-        },
-    },
-    mounted() {
-        window.addEventListener("scroll", this.handleScroll);
-        this.handleScroll();
-    },
-    beforeDestroy() {
-        window.removeEventListener("scroll", this.handleScroll);
-    },
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { Head, router } from '@inertiajs/vue3';
+
+const showButton = ref(false);
+const currentYear = `2024-${new Date().getFullYear()}`;
+
+const goToRegister = () => router.get(route('register'));
+const goToLogin = () => router.get(route('login'));
+
+const smoothScrollToContent = (target) => {
+    const targetSection = document.querySelector(target);
+    window.scrollTo({
+        top: targetSection.offsetTop,
+        behavior: "smooth",
+    });
 };
+
+const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
+};
+const handleScroll = () => {
+    showButton.value = window.scrollY > 20;
+};
+
+onMounted(() => {
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
 <template>
+    <Head title="Home" />
     <!-- Navbar -->
     <nav class="bg-darkest text-white py-2 shadow-md">
         <div class="container mx-auto flex items-center justify-between px-4">
@@ -70,20 +72,16 @@ export default {
                         away from the keyboard
                     </p>
                     <div class="flex md:flex-row gap-4">
-                        <a href="#">
-                            <button class="bg-darkest text-white px-8 py-3
-                                rounded-lg border-4 border-darkest
+                        <button @click="goToRegister" class="bg-darkest text-white px-8 py-3
+                                border-4 border-darkest
                                 hover:brightness-50 transition font-bold">
-                                Sign Up
-                            </button>
-                        </a>
-                        <a href="#">
-                            <button class="bg-lightest text-darkest px-10 py-3
-                                rounded-lg border-4 border-darkest
+                            Sign Up
+                        </button>
+                        <button @click="goToLogin" class="bg-lightest text-darkest px-10 py-3
+                                border-4 border-darkest
                                 hover:brightness-50 transition font-bold">
-                                Login
-                            </button>
-                        </a>
+                            Login
+                        </button>
                     </div>
                 </div>
             </div>
@@ -156,7 +154,7 @@ export default {
             <p>
                 Contribute on
                 <a href="https://github.com/steguiosaur/contex" target="_blank"
-                    class="text-blue-500 hover:underline font-semibold">
+                    class="text-lightest hover:underline font-semibold">
                     GitHub
                 </a>
             </p>
