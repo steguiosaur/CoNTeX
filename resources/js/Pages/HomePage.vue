@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: "Home",
+    name: "HomePage",
     data() {
         return {
             currentYear: `2024-${new Date().getFullYear()}`,
@@ -36,9 +36,10 @@ export default {
 </script>
 
 <template>
+    <!-- Navbar -->
     <nav class="bg-darkest text-white py-2 shadow-md">
         <div class="container mx-auto flex items-center justify-between px-4">
-            <a href="/" class="font-inter flex items-center text-3xl font-bold
+            <a href="/" class="flex items-center text-3xl font-bold
                 text-lighter">
                 <img id="logo-img" src="/images/ctx-light.png" alt="CoNTeX" class="h-7 w-auto mr-2" />
                 CoNTeX
@@ -46,12 +47,14 @@ export default {
         </div>
     </nav>
 
+    <!-- Go to top button -->
     <button v-show="showButton" @click="scrollToTop" title="Go to top" class="fixed bottom-5 right-5 z-50 p-3 bg-lightest text-primary
         border-4 font-bold border-darkest text-darkest rounded-full cursor-pointer
         hover:brightness-50">
         ^
     </button>
 
+    <!-- Welcome page or something -->
     <section class="w-full min-h-screen flex flex-col items-center justify-center
         px-14 py-14">
         <div class="w-full max-w-7xl flex flex-wrap items-center justify-center md:justify-between">
@@ -98,6 +101,7 @@ export default {
         </div>
     </section>
 
+    <!-- Read more text about this application -->
     <section id="read-more-section" class="container mx-auto py-12 px-4">
         <h3 class="text-4xl font-bold mt-10 text-darkest text-center">
             Texts? Diagrams? Equations? We can handle them all!
@@ -146,6 +150,7 @@ export default {
         </div>
     </section>
 
+    <!-- Footer  -->
     <footer class="bg-darkest text-center py-6 text-lighter border-t border-gray-300">
         <div class="space-y-2">
             <p>

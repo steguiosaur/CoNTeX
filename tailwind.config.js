@@ -10,15 +10,8 @@ export default {
         './resources/js/**/*.vue',
     ],
 
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
-        },
-    },
-
     plugins: [forms],
+
     theme: {
         extend: {
             colors: {
@@ -28,8 +21,8 @@ export default {
                 lighter: '#dddddd',
             },
             fontFamily: {
-                inter: ['"Inter"', 'sans-serif'],
-                jetbrains: ['"JetBrains"', 'monospace'],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                jetbrains: ['JetBrains', 'monospace'],
             },
         },
     },
