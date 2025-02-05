@@ -19,6 +19,7 @@ export default {
                 darkest: '#202020',
                 darker: '#555555',
                 lighter: '#dddddd',
+                bluish: '#235590',
             },
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
