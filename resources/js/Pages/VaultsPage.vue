@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBar from '@/Components/NavBar.vue';
 import GoToTopButton from '@/Components/GoToTopButton.vue';
 import Footer from '@/Components/Footer.vue';
+import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const myVaults = ref([
@@ -51,7 +52,7 @@ const deleteContibutedVault = (id) => {
 };
 
 const openVault = (id) => {
-    console.log(`Opening vault with ID: ${id}`);
+    router.get(route('editor'));
 };
 </script>
 
