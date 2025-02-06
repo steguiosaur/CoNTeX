@@ -10,7 +10,7 @@ const user = usePage().props.auth.user;
 
 const goToRegister = () => { router.get(route('register')); };
 const goToLogin = () => { router.get(route('login')); };
-const goToVault = () => { router.get(route('vaults')); };
+const goToVault = () => { router.get(route('vaults.index')); };
 
 const smoothScrollToContent = (target) => {
     const targetSection = document.querySelector(target);

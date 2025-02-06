@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VaultController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,9 +24,9 @@ Route::get('/profile', function () {
     return Inertia::render('Profile/Edit');
 })->middleware(['auth', 'verified'])->name('profile');
 
-Route::get('/vaults', function () {
-    return Inertia::render('VaultsPage');
-})->middleware(['auth', 'verified'])->name('vaults');
+// Route::get('/vaults', function () {
+//     return Inertia::render('VaultsPage');
+// })->middleware(['auth', 'verified'])->name('vaults');
 
 Route::get('/editor', function () {
     return Inertia::render('EditorPage');
@@ -37,5 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('vaults', VaultController::class)->middleware('auth');
 
 require __DIR__ . '/auth.php';
