@@ -35,7 +35,7 @@ const smoothScrollToContent = (target) => {
         px-14 py-14">
             <div class="w-full max-w-7xl flex flex-wrap items-center justify-center md:justify-between">
 
-                <div class="w-full md:w-1/2 mb-8 md:mb-0 md:text-left mx-auto flex
+                <div class="w-full pr-0 md:pr-10 md:w-1/2 mb-8 md:mb-0 md:text-left mx-auto flex
                 justify-center">
                     <div class="">
                         <h1 class="text-5xl font-bold mb-4 text-gray-900">

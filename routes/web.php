@@ -20,7 +20,7 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::get('/profile', function () {
-    return Inertia::render('ProfilePage');
+    return Inertia::render('Profile/Edit');
 })->middleware(['auth', 'verified'])->name('profile');
 
 Route::get('/vaults', function () {
