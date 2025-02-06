@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBar from '@/Components/NavBar.vue';
 import GoToTopButton from '@/Components/GoToTopButton.vue';
 import Footer from '@/Components/Footer.vue';
+import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const myVaults = ref([
