@@ -1,11 +1,67 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 const text = ref('');
+const mode = ref('split'); // 'edit', 'preview', 'split'
 
 onMounted(() => {
     document.documentElement.classList.add("overflow-hidden"); // Disable page scrolling
+
+    // Add scroll event listeners after the component is mounted
+    const sourceText = document.getElementById("source-text");
+    const mainPreview = document.getElementById("render-text");
+
+    if (sourceText && mainPreview) {
+        // Function to synchronize scrolling
+        function syncScroll(event) {
+            var target = event.target;
+            if (target.id === "source-text") {
+                mainPreview.scrollTop = target.scrollTop;
+            } else {
+                sourceText.scrollTop = target.scrollTop;
+            }
+        }
+
+        // Add scroll event listeners
+        sourceText.addEventListener("scroll", syncScroll);
+        mainPreview.addEventListener("scroll", syncScroll);
+    } else {
+        console.error("source-text or render-text element not found!");
+    }
 });
+
+const isMobile = computed(() => {
+    return window.innerWidth < 768; // Adjust breakpoint as needed
+});
+
+const currentMode = computed(() => {
+    if (isMobile.value) {
+        return mode.value === 'split' ? 'edit' : mode.value; // Mobile always starts with edit
+    }
+    return mode.value;
+});
+
+const showEditor = computed(() => {
+    return currentMode.value === 'edit' || currentMode.value === 'split';
+});
+
+const showPreview = computed(() => {
+    return currentMode.value === 'preview' || currentMode.value === 'split';
+});
+
+const textareaWidthClass = computed(() => {
+    if (currentMode.value === 'edit') return 'w-full';
+    return 'w-1/2';
+});
+
+const previewWidthClass = computed(() => {
+    if (currentMode.value === 'preview') return 'w-full';
+    return 'w-1/2';
+});
+
+const toggleMode = (newMode) => {
+    mode.value = newMode;
+};
 </script>
 
 <template>
@@ -13,7 +69,14 @@ onMounted(() => {
         <!-- Navbar -->
         <nav class="bg-darkest text-white py-2 shadow-md flex-shrink-0">
             <div class="mx-auto flex items-center justify-between px-4">
-                <div class="flex items-center space-x-6"></div>
+                <div class="flex items-center space-x-6">
+                    <button @click="toggleMode('edit')" :class="{'font-bold': currentMode === 'edit'}"
+                        class="text-white hover:text-lighter">Edit</button>
+                    <button @click="toggleMode('preview')" :class="{'font-bold': currentMode === 'preview'}"
+                        class="text-white hover:text-lighter">Preview</button>
+                    <button @click="toggleMode('split')" :class="{'font-bold': currentMode === 'split'}"
+                        class="text-white hover:text-lighter hidden sm:inline-block">Split</button>
+                </div>
                 <a href="/" class="flex items-center text-3xl font-bold text-lighter">
                     <img id="logo-img" src="/images/ctx-light.png" alt="CoNTeX" class="h-7 w-auto" />
                 </a>
@@ -21,14 +84,16 @@ onMounted(() => {
         </nav>
 
         <!-- Main editor container (fills remaining space) -->
-        <div class="flex-grow flex">
+        <div class="flex-grow flex" :class="{'flex-col': isMobile}">
             <!-- Textarea (Left) -->
-            <textarea v-model="text" class="font-jetbrains bg-lightest w-1/2 h-full p-8 border-r border-gray-300
-                resize-none focus:outline-none overflow-auto flex" placeholder="Start typing..."></textarea>
+            <textarea v-if="showEditor" v-model="text" :class="['font-jetbrains', 'bg-lightest', textareaWidthClass,
+                 'h-full', 'p-8', 'border-r', 'border-gray-300', 'resize-none', 'focus:outline-none', 'overflow-auto', 'flex']"
+                placeholder="Start typing..." id="source-text"></textarea>
 
             <!-- Preview (Right) -->
-            <pre class="font-sans w-1/2 h-full p-8 bg-lighter overflow-auto m-0 pre-style
-                flex"><code>{{ text }}</code>
+            <pre v-if="showPreview" :class="['font-sans', previewWidthClass, 'bg-lighter', 'overflow-auto', 'm-0', 'pre-style',
+                 'flex', 'h-full', 'p-8']" id="render-text"><code>{{ text }}
+                </code>
             </pre>
         </div>
 
