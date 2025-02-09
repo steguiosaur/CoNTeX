@@ -3,14 +3,37 @@ import { ref, onMounted, computed } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import parseMarkdown from '@/utils/markdownParser';
 import { escapeSpecialChars } from '@/utils/markdownParser';
+import axios from 'axios'; // Import axios
 
-const text = ref('');
+// Define props to receive vault and document data
+const props = defineProps({
+    vault: {
+        type: Object,
+        required: true,
+    },
+    document: {
+        type: Object,
+        default: null, // Document can be null if creating a new one or opening editor without a document
+    },
+    documentContent: {
+        type: String,
+        default: '',
+    }
+});
+
+const text = ref(props.documentContent);
 const parsedHTMLSections = computed(() => {
     const escapedText = escapeSpecialChars(text.value);
     return parseMarkdown(escapedText);
 });
 const mode = ref('split');
-const isFileTreeOpen = ref(false);
+const isFileTreeOpen = ref(true);
+
+// Document Management State
+const currentVaultId = ref(props.vault.vault_id);
+const currentDocumentId = ref(props.document ? props.document.document_id : null);
+const documentName = ref(props.document ? props.document.document_name : 'Untitled.md');
+const isSaving = ref(false);
 
 const toggleFileTree = () => {
     isFileTreeOpen.value = !isFileTreeOpen.value;
@@ -36,6 +59,10 @@ onMounted(() => {
         mainPreview.addEventListener("scroll", syncScroll);
     } else {
         console.error("source-text or render-text element not found!");
+    }
+
+    if (currentDocumentId.value && !props.documentContent) {
+        loadDocumentContent();
     }
 });
 
@@ -71,6 +98,110 @@ const previewWidthClass = computed(() => {
 const toggleMode = (newMode) => {
     mode.value = newMode;
 };
+
+// Document Management Functions
+
+const loadDocumentContent = async () => {
+    if (!currentDocumentId.value || !currentVaultId.value) {
+        console.warn('Cannot load document: No document or vault selected.');
+        return;
+    }
+
+    console.log('Loading document content for document ID:', currentDocumentId.value, 'in vault:', currentVaultId.value);
+     try {
+         const response = await axios.get(`/vaults/${currentVaultId.value}/documents/${currentDocumentId.value}/edit`); // Or a dedicated API route for content
+         text.value = response.data.documentContent;
+         documentName.value = response.data.document_name;
+     } catch (error) {
+         console.error('Error loading document content:', error);
+     }
+};
+
+
+const saveDocument = async () => {
+    if (!currentDocumentId.value || !currentVaultId.value) {
+        console.warn('Cannot save: No document or vault selected.');
+        return;
+    }
+
+    isSaving.value = true;
+    try {
+        const response = await axios.put(`/vaults/${currentVaultId.value}/documents/${currentDocumentId.value}`, {
+            content: text.value,
+            document_name: documentName.value
+        });
+        console.log('Document saved:', response.data);
+    } catch (error) {
+        console.error('Error saving document:', error);
+    } finally {
+        isSaving.value = false;
+    }
+};
+
+const createDocument = async () => {
+    const newName = prompt("Enter new document name:", "Untitled Document.md");
+    if (!newName) return;
+
+    try {
+        const response = await axios.post(`/vaults/${currentVaultId.value}/documents`, {
+            document_name: newName
+        });
+
+        currentDocumentId.value = response.data.document_id;
+        documentName.value = response.data.document_name;
+        text.value = '';
+        console.log('Document created:', response.data);
+    } catch (error) {
+        console.error('Error creating document:', error);
+        alert("Failed to create document.");
+    }
+};
+
+
+const renameDocument = async () => {
+    if (!currentDocumentId.value || !currentVaultId.value) {
+        console.warn('Cannot rename: No document selected.');
+        return;
+    }
+    const newName = prompt("Enter new document name:", documentName.value);
+    if (!newName || newName === documentName.value) return;
+
+    try {
+        const response = await axios.put(`/vaults/${currentVaultId.value}/documents/${currentDocumentId.value}`, {
+            document_name: newName,
+            content: text.value
+        });
+
+        documentName.value = newName;
+        console.log('Document renamed:', response.data);
+    } catch (error) {
+        console.error('Error renaming document:', error);
+        alert("Failed to rename document.");
+    }
+};
+
+
+const deleteDocument = async () => {
+    if (!currentDocumentId.value || !currentVaultId.value) {
+        console.warn('Cannot delete: No document selected.');
+        return;
+    }
+
+    if (!confirm("Are you sure you want to delete this document?")) return;
+
+    try {
+        await axios.delete(`/vaults/${currentVaultId.value}/documents/${currentDocumentId.value}`);
+
+        currentDocumentId.value = null;
+        documentName.value = 'Untitled.md';
+        text.value = '';
+        console.log('Document deleted successfully');
+
+    } catch (error) {
+        console.error('Error deleting document:', error);
+        alert("Failed to delete document.");
+    }
+};
 </script>
 
 <template>
@@ -98,7 +229,7 @@ const toggleMode = (newMode) => {
 
             <div class="p-4">
                 <h2 class="font-semibold mb-2 text-lighter">Documents</h2>
-                <button class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mb-4 block w-full text-center">
+                <button @click="createDocument" class="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mb-4 block w-full text-center">
                     Create Document
                 </button>
                 <ul>
@@ -106,8 +237,8 @@ const toggleMode = (newMode) => {
                         class="p-2 hover:bg-darker cursor-pointer rounded">
                         {{ file }}
                         <div class="hidden hover:block absolute bg-darkest border border-gray-700 rounded shadow-md p-2 z-30">
-                            <button class="block hover:bg-darker px-2 py-1 rounded w-full text-left text-white">Rename</button>
-                            <button class="block hover:bg-darker px-2 py-1 rounded w-full text-left text-white">Delete</button>
+                            <button @click="renameDocument" class="block hover:bg-darker px-2 py-1 rounded w-full text-left text-white">Rename</button>
+                            <button @click="deleteDocument" class="block hover:bg-darker px-2 py-1 rounded w-full text-left text-white">Delete</button>
                         </div>
                     </li>
                 </ul>
@@ -132,6 +263,12 @@ const toggleMode = (newMode) => {
                             class="text-white hover:text-lighter">Preview</button>
                         <button @click="toggleMode('split')" :class="{ 'font-bold': currentMode === 'split' }"
                             class="text-white hover:text-lighter hidden sm:inline-block">Split</button>
+                         <!-- Save Button -->
+                        <button @click="saveDocument" :disabled="isSaving" class="text-white hover:text-lighter" :class="{'opacity-50 cursor-wait': isSaving}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 12.75 7.5 16.5V3.75a2.25 2.25 0 012.25-2.25h6.75a2.25 2.25 0 012.25 2.25zM4.5 19.5h15a2.25 2.25 0 002.25-2.25v-2.25a2.25 2.25 0 00-2.25-2.25H4.5a2.25 2.25 0 00-2.25 2.25v2.25a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                        </button>
                     </div>
                     <a href="/" class="flex items-center text-3xl font-bold text-lighter">
                         <img id="logo-img" src="/images/ctx-light.png" alt="CoNTeX" class="h-7 w-auto" />
@@ -156,7 +293,7 @@ const toggleMode = (newMode) => {
             </div>
 
             <footer class="bg-darkest text-white text-sm py-2 px-4 flex justify-between items-center h-8 textarea-style flex-shrink-0">
-                <span>Untitled.md | 123:3</span>
+                <span>{{ documentName }} | 123:3</span>
             </footer>
         </div>
     </div>

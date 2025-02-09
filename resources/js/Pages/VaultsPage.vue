@@ -5,6 +5,7 @@ import GoToTopButton from '@/Components/GoToTopButton.vue';
 import Footer from '@/Components/Footer.vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import axios from 'axios'; // Import axios for fetching documents
 
 const props = defineProps({
     myVaults: {
@@ -18,26 +19,59 @@ const toggleMenu = (id) => {
     menuOpen.value = menuOpen.value === id ? null : id;
 };
 
-const openVault = (id) => {
-    router.get(route('editor'));
+const openVault = async (vaultId) => {
+    try {
+        // Fetch documents for the selected vault
+        const response = await axios.get(`/vaults/${vaultId}/documents`); // Adjust API endpoint if needed
+        const documents = response.data.data; // Assuming your API returns documents in 'data' array
+
+        if (documents && documents.length > 0) {
+            // If documents exist, open the editor with the FIRST document
+            const firstDocumentId = documents[0].document_id; // Assuming document ID is 'document_id'
+            router.get(route('documents.edit', { vault: vaultId, document: firstDocumentId }));
+        } else {
+            // If no documents in vault, CREATE an "Untitled Document.md" and then open editor
+            try {
+                const createResponse = await axios.post(`/vaults/${vaultId}/documents`, { // Call API to create document
+                    document_name: 'Untitled Document.md' // Default document name
+                });
+                const newDocumentId = createResponse.data.document_id; // Get ID of newly created document
+
+                router.get(route('documents.edit', { vault: vaultId, document: newDocumentId })); // Open editor with the new document
+
+                console.log("Vault was empty, created 'Untitled Document.md' and opened editor.");
+
+            } catch (createError) {
+                console.error("Error creating default document:", createError);
+                // Handle document creation error (e.g., show error message to user)
+                router.get(route('vaults.editor', { vault: vaultId })); // Fallback: Open editor even if document creation fails, but it will be empty
+                console.warn("Failed to create default document, opening empty editor in vault.");
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching documents for vault:", error);
+        // Handle error (e.g., show error message to user)
+        router.get(route('vaults.editor', { vault: vaultId })); // Fallback: Open editor even if document fetch fails, but it will be empty
+        console.warn("Failed to fetch documents, opening empty editor in vault.");
+    }
 };
 
-// Add Vault Modal Logic
-const addingVault = ref(false); // Ref to control modal visibility
+// Add Vault Modal Logic (remains the same)
+const addingVault = ref(false);
 const formAdd = useForm({
     vault_name: '',
     description: '',
 });
 
 const addVault = () => {
-    addingVault.value = true; // Open the modal
+    addingVault.value = true;
 };
 
 const submitVault = () => {
     formAdd.post(route('vaults.store'), {
         onSuccess: () => {
-            addingVault.value = false; // Close the modal
-            formAdd.reset(); // Optionally reset the form after successful creation
+            addingVault.value = false;
+            formAdd.reset();
         },
     });
 };
@@ -47,7 +81,7 @@ const cancelAdd = () => {
     formAdd.reset();
 };
 
-// Edit Vault Modal Logic
+// Edit Vault Modal Logic (remains the same)
 const editingVault = ref(null);
 const formEdit = useForm({
     vault_name: '',
@@ -63,8 +97,8 @@ const editVault = (vault) => {
 const updateVault = () => {
     formEdit.put(route('vaults.update', editingVault.value.vault_id), {
         onSuccess: () => {
-            editingVault.value = null; // Close the modal after successful update
-            formEdit.reset(); // Optionally reset the form after successful update
+            editingVault.value = null;
+            formEdit.reset();
         },
     });
 };
@@ -73,14 +107,12 @@ const cancelEdit = () => {
     editingVault.value = null;
 };
 
-// Delete Vault
+// Delete Vault (remains the same)
 const deleteVault = (id) => {
     router.delete(route('vaults.destroy', id));
 };
 
 const deleteContibutedVault = (id) => {
-    //This need to be fixed in the future if we gonna implement contributed vaults.
-    //For now just refresh the page to show the proper behaviour.
     router.reload()
 };
 </script>
@@ -171,7 +203,7 @@ const deleteContibutedVault = (id) => {
 
         <Footer />
 
-        <!-- Add Vault Modal -->
+        <!-- Add Vault Modal (remains the same) -->
         <div v-if="addingVault"
             class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -204,7 +236,7 @@ const deleteContibutedVault = (id) => {
             </div>
         </div>
 
-        <!-- Edit Vault Modal -->
+        <!-- Edit Vault Modal (remains the same) -->
         <div v-if="editingVault"
             class="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
