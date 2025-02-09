@@ -13,16 +13,11 @@ __This is also bold text using underscores.__
 *This is italic text using asterisks.*
 _This is also italic text using underscores._
 
-This is a paragraph with a [link to Google](https://www.google.com).
+[link to Google](https://www.google.com)
 
-Here is some `inline code`.
+`inline code`
 
-```javascript
-// This is a fenced code block
-function helloWorld() {
-  console.log("Hello, world!");
-}
-```
+This is a paragraph with **bold**, *italics*, `inline_code`, $inline math$, and ~~strikestrikethrough~~ in it
 
 | asdf | adsf | adsf |
 | ---- | ---- | ---- |
@@ -43,33 +38,27 @@ $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 $$
 
+$$T^{\mu\nu}=\begin{pmatrix}
+\varepsilon&0&0&0\\
+0&\varepsilon/3&0&0\\
+0&0&\varepsilon/3&0\\
+0&0&0&\varepsilon/3
+\end{pmatrix},$$
+
+
 > This is a blockquote.
 > It can span multiple lines.
 
 ---
 This is a horizontal rule.
 
-* Unordered list item 1
+- Unordered list item 1
 - Unordered list item 2
-+ Unordered list item 3
+- Unordered list item 3
 
 1. Ordered list item 1
 2. Ordered list item 2
 3. Ordered list item 3
-
-\#This is not a heading because the '#' is escaped.
-\*This is not bold or italic because the '*' is escaped.
-\_This is not italic because the '_' is escaped.
-\`This is not inline code because the '`' is escaped.
-\[This is not a link because the '[' is escaped.
-\]This is not a link because the ']' is escaped.
-\(This is not a link because the '(' is escaped.
-\)This is not a link because the ')' is escaped.
-\>This is not a blockquote because the '>' is escaped.
-\-This is not a list item because the '-' is escaped.
-\+This is not a list item because the '+' is escaped.
-\.This is not a list item because the '.' is escaped.
-\!This is not an image because the '!' is escaped.
 
 This paragraph has a single newline within it.
 Like this.
@@ -77,3 +66,4 @@ Like this.
 This paragraph has a double newline
 
 between them, creating a line break.
+

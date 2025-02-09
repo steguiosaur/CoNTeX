@@ -293,7 +293,7 @@ const parse = (tokens) => {
 };
 
 
-// Renderer (Modified to render sections)
+// Renderer (Modified to render sections and ensure list markers)
 const render = (ast) => {
     let htmlSections = [];
 
@@ -361,13 +361,13 @@ const render = (ast) => {
                     sectionHTML += `${escapeSpecialChars(token.content)}`;
                     break;
                 case 'bold':
-                    sectionHTML += `<strong style="font-weight: bold;">${render({ sections: [{ type: 'section', children: [{ type: 'text', content: token.content }] }] })}</strong>`;
+                    sectionHTML += `<strong style="font-weight: bold;">${escapeSpecialChars(token.content)}</strong>`;
                     break;
                 case 'italic':
-                    sectionHTML += `<em style="font-style: italic;">${render({ sections: [{ type: 'section', children: [{ type: 'text', content: token.content }] }] })}</em>`;
+                    sectionHTML += `<em style="font-style: italic;">${escapeSpecialChars(token.content)}</em>`;
                     break;
                 case 'link':
-                    sectionHTML += `<a href="${escapeSpecialChars(token.url)}">${render({ sections: [{ type: 'section', children: [{ type: 'text', content: token.content }] }] })}</a>`;
+                    sectionHTML += `<a href="${escapeSpecialChars(token.url)}">${escapeSpecialChars(token.content)}</a>`;
                     break;
                 case 'inline_code':
                     sectionHTML += `<code style="background-color: #DDDDDD;">${escapeSpecialChars(token.content)}</code>`;
@@ -392,12 +392,12 @@ const render = (ast) => {
                     sectionHTML += `<img src="${escapeSpecialChars(token.url)}" alt="${escapeSpecialChars(token.altText)}" />`;
                     break;
                 case 'strikethrough':
-                    sectionHTML += `<del>${render({ sections: [{ type: 'section', children: [{ type: 'text', content: token.content }] }] })}</del>`;
+                    sectionHTML += `<del>${escapeSpecialChars(token.content)}</del>`;
                     break;
                 case 'inline_math': {
                     const protocol = location.protocol === "https:" ? "https:" : "http:";
-                    const url = protocol + '//i.upmath.me/svg/' + encodeURIComponent('$$' + node.formula + '$$'); // Encoded with single $ now
-                    sectionHTML += `<img class="latex-code" style="vertical-align: middle; display: inline-block;" src="${url}" alt="${node.formula}" />`; // Ensure inline-block
+                    const url = protocol + '//i.upmath.me/svg/' + encodeURIComponent('$$' + token.formula + '$$'); // Encoded with single $ now
+                    sectionHTML += `<img class="latex-code" style="vertical-align: middle; display: inline-block;" src="${url}" alt="${token.formula}" />`; // Ensure inline-block
                     break;
                 }
                 case 'block_math': {
@@ -433,7 +433,7 @@ const render = (ast) => {
                         sectionHTML += `<blockquote>`;
                         blockquoteOpen = true;
                     }
-                    sectionHTML += render({ sections: [{ type: 'section', children: [{ type: 'text', content: token.content }] }] });
+                    sectionHTML += escapeSpecialChars(token.content);
                     break;
                 case 'hr':
                     if (paragraphOpen) {
@@ -465,10 +465,11 @@ const render = (ast) => {
                             sectionHTML += `</${listType === 'ordered' ? 'ol' : 'ul'}>`;
                         }
                         listType = token.listType;
-                        sectionHTML += `<${listType === 'ordered' ? 'ol' : 'ul'}>`;
+                        // Add inline style to ensure list markers are visible
+                        sectionHTML += `<${listType === 'ordered' ? 'ol' : 'ul'} style="list-style-type: ${listType === 'ordered' ? 'decimal' : 'disc'};">`;
                         listOpen = true;
                     }
-                    sectionHTML += `<li>${render({ sections: [{ type: 'section', children: [{ type: 'text', content: token.content }] }] })}</li>`;
+                    sectionHTML += `<li>${escapeSpecialChars(token.content)}</li>`;
                     break;
                 case 'newline':
                     if (token.count >= 2 && paragraphOpen) {
