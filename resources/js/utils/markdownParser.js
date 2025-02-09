@@ -1,5 +1,3 @@
-// markdownParser.js
-
 // Helper function to escape HTML special characters
 export const escapeSpecialChars = (str) => {
     if (!str) return '';
@@ -18,7 +16,7 @@ const tokenize = (markdown) => {
     const tokens = [];
     let i = 0;
 
-    const MAX_CODE_BLOCK_LENGTH = 50000; // Adjust this value as needed (e.g., 50KB)
+    const MAX_CODE_BLOCK_LENGTH = 50000;
 
     while (i < markdown.length) {
         if (markdown[i] === '\\') {
@@ -93,14 +91,14 @@ const tokenize = (markdown) => {
             let content = '';
             let codeBlockLength = 0; // Track code block length
             while (i < markdown.length && !(markdown[i] === '`' && markdown[i + 1] === '`' && markdown[i + 2] === '`')) {
-                if (codeBlockLength < MAX_CODE_BLOCK_LENGTH) { // Only accumulate if within limit
+                if (codeBlockLength < MAX_CODE_BLOCK_LENGTH) {
                     content += content + markdown[i];
                     codeBlockLength++;
                 }
                 i++;
             }
             if (codeBlockLength >= MAX_CODE_BLOCK_LENGTH) {
-                content += "\n\n**[Code block truncated due to excessive length]**"; // Add warning
+                content += "\n\n**[Code block truncated due to excessive length]**";
             }
             tokens.push({ type: 'code_block', content: content.trim() });
             i += 3;
@@ -198,8 +196,7 @@ const tokenize = (markdown) => {
                 tokens.push({ type: 'block_math', formula: formula.trim() });
                 i += 2;
             } else {
-                //Unclosed $$, treat as text
-                tokens.push({ type: 'text', content: '$$' + formula }); // Include the initial $$ as text
+                tokens.push({ type: 'text', content: '$$' + formula });
             }
         } else if (markdown[i] === '$') {
             // Inline Math
@@ -214,7 +211,7 @@ const tokenize = (markdown) => {
                 i++; // Skip the closing $
             } else {
                 // Unclosed $, treat as text
-                tokens.push({ type: 'text', content: '$' + formula }); // Include the initial $ as text
+                tokens.push({ type: 'text', content: '$' + formula });
             }
         } else if (markdown[i] === '*' || markdown[i] === '-' || markdown[i] === '+') {
             const marker = markdown[i];
@@ -260,7 +257,7 @@ const tokenize = (markdown) => {
     return tokens;
 };
 
-// Parser (Modified to create sections)
+// Parser
 const parse = (tokens) => {
     const ast = { type: 'document', sections: [] };
     let currentSection = null;
@@ -293,7 +290,7 @@ const parse = (tokens) => {
 };
 
 
-// Renderer (Modified to render sections and ensure list markers)
+// Renderer
 const render = (ast) => {
     let htmlSections = [];
 
@@ -465,7 +462,6 @@ const render = (ast) => {
                             sectionHTML += `</${listType === 'ordered' ? 'ol' : 'ul'}>`;
                         }
                         listType = token.listType;
-                        // Add inline style to ensure list markers are visible
                         sectionHTML += `<${listType === 'ordered' ? 'ol' : 'ul'} style="list-style-type: ${listType === 'ordered' ? 'decimal' : 'disc'};">`;
                         listOpen = true;
                     }
@@ -508,8 +504,6 @@ const render = (ast) => {
     return htmlSections;
 };
 
-
-// Main Parser Function (Modified to return HTML sections)
 const parseMarkdown = (markdownText) => {
     const tokens = tokenize(markdownText);
     const ast = parse(tokens);

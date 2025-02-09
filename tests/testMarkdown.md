@@ -19,19 +19,17 @@ _This is also italic text using underscores._
 
 This is a paragraph with **bold**, *italics*, `inline_code`, $inline math$, and ~~strikestrikethrough~~ in it
 
-| asdf | adsf | adsf |
-| ---- | ---- | ---- |
-| adsf | asdf | asdf |
-| adsf | asdf | asdf |
-| adsf | asdf | asdf |
-| adsf | asdf | asdf |
-| adsf | asdf | asdf |
+| Header 1 | Header 2 | Header 3 |
+| -------- | -------- | -------- |
+| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |
+| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |
 
-![This is alt text for an image](https://via.placeholder.com/150)
+![This is alt text for an image](http://localhost:8000/images/account.png)
 
 ~~This text is strikethrough.~~
 
-Inline math: $$E=mc^2$$.
+Inline math:
+$E=mc^2$
 
 Block math:
 $$
