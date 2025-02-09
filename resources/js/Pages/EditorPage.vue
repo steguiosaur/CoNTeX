@@ -1,13 +1,18 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import parseMarkdown from '@/utils/markdownParser';
+import { escapeSpecialChars } from '@/utils/markdownParser';
 
 const text = ref('');
-const mode = ref('split'); // 'edit', 'preview', 'split'
+const parsedHTMLSections = computed(() => { // Renamed to parsedHTMLSections
+    const escapedText = escapeSpecialChars(text.value);
+    return parseMarkdown(escapedText); // Now returns an array of HTML sections
+});
+const mode = ref('split');
 
 onMounted(() => {
-    document.documentElement.classList.add("overflow-hidden"); // Disable page scrolling
+    document.documentElement.classList.add("overflow-hidden");
 
-    // Add scroll event listeners after the component is mounted
     const sourceText = document.getElementById("source-text");
     const mainPreview = document.getElementById("render-text");
 
@@ -22,7 +27,6 @@ onMounted(() => {
             }
         }
 
-        // Add scroll event listeners
         sourceText.addEventListener("scroll", syncScroll);
         mainPreview.addEventListener("scroll", syncScroll);
     } else {
@@ -31,12 +35,12 @@ onMounted(() => {
 });
 
 const isMobile = computed(() => {
-    return window.innerWidth < 768; // Adjust breakpoint as needed
+    return window.innerWidth < 768;
 });
 
 const currentMode = computed(() => {
     if (isMobile.value) {
-        return mode.value === 'split' ? 'edit' : mode.value; // Mobile always starts with edit
+        return mode.value === 'split' ? 'edit' : mode.value;
     }
     return mode.value;
 });
@@ -91,8 +95,9 @@ const toggleMode = (newMode) => {
                 placeholder="Start typing..." id="source-text"></textarea>
 
             <!-- Preview (Right) -->
-            <pre v-if="showPreview" :class="['font-sans', previewWidthClass, 'bg-lighter', 'overflow-auto', 'm-0', 'pre-style',
-                 'flex', 'h-full', 'p-8']" id="render-text"><code>{{ text }}
+            <pre v-if="showPreview" :class="['font-sans', previewWidthClass, 'bg-lighter', 'pre-style',
+                'flex', 'h-full', 'p-8']" id="render-text">
+                <code class="font-sans"><div v-for="(sectionHTML, index) in parsedHTMLSections" :key="index" class="section-container" v-html="sectionHTML"></div> <!-- Render sections -->
                 </code>
             </pre>
         </div>
@@ -127,5 +132,10 @@ html, body {
     max-height: calc(100vh - 76px);
     overflow-wrap: break-word; /* Redundant, but good to have */
     word-break: break-word;    /* Force breaking even mid-word */
+}
+
+.section-container {
+    margin-bottom: 1em; /* Adjust spacing as needed */
+    /* You could also use padding-bottom or border-bottom if preferred */
 }
 </style>
