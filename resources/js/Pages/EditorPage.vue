@@ -27,7 +27,7 @@ const parsedHTMLSections = computed(() => {
     return parseMarkdown(escapedText);
 });
 const mode = ref('split');
-const isFileTreeOpen = ref(true);
+const isFileTreeOpen = ref(false);
 
 // Document Management State
 const currentVaultId = ref(props.vault.vault_id);
@@ -121,7 +121,7 @@ const loadDocumentContent = async () => {
 const saveDocument = async () => {
     if (!currentDocumentId.value || !currentVaultId.value) {
         console.warn('Cannot save: No document or vault selected.');
-        return;
+        return; // Or show a user-friendly message
     }
 
     isSaving.value = true;
