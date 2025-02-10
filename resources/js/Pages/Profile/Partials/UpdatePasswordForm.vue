@@ -51,7 +51,7 @@ const updatePassword = () => {
                 <InputLabel for="current_password" value="Current Password:" />
 
                 <TextInput id="current_password" ref="currentPasswordInput" v-model="form.current_password"
-                    type="password" class="mt-1 block w-full" autocomplete="current-password" />
+                    type="password" class="mt-1 p-3 block w-full" autocomplete="current-password" />
 
                 <InputError :message="form.errors.current_password" class="mt-2" />
             </div>
@@ -60,7 +60,7 @@ const updatePassword = () => {
                 <InputLabel for="password" value="New Password:" />
 
                 <TextInput id="password" ref="passwordInput" v-model="form.password" type="password"
-                    class="mt-1 block w-full" autocomplete="new-password" />
+                    class="mt-1 p-3 block w-full" autocomplete="new-password" />
 
                 <InputError :message="form.errors.password" class="mt-2" />
             </div>
@@ -69,7 +69,7 @@ const updatePassword = () => {
                 <InputLabel for="password_confirmation" value="Confirm Password:" />
 
                 <TextInput id="password_confirmation" v-model="form.password_confirmation" type="password"
-                    class="mt-1 block w-full" autocomplete="new-password" />
+                    class="mt-1 p-3 block w-full" autocomplete="new-password" />
 
                 <InputError :message="form.errors.password_confirmation" class="mt-2" />
             </div>
