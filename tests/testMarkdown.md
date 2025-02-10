@@ -5,6 +5,8 @@
 ##### Heading 5
 ###### Heading 6
 
+
+## Text Renders
 This is a paragraph of text.  It demonstrates how paragraphs are rendered.
 
 **This is bold text using asterisks.**
@@ -17,31 +19,9 @@ _This is also italic text using underscores._
 
 `inline code`
 
-This is a paragraph with **bold**, *italics*, `inline_code`, $inline math$, and ~~strikestrikethrough~~ in it
-
-| Header 1 | Header 2 | Header 3 |
-| -------- | -------- | -------- |
-| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |
-| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |
-
-![This is alt text for an image](http://localhost:8000/images/account.png)
-
 ~~This text is strikethrough.~~
 
-Inline math:
-$E=mc^2$
-
-Block math:
-$$
-\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
-$$
-
-$$T^{\mu\nu}=\begin{pmatrix}
-\varepsilon&0&0&0\\
-0&\varepsilon/3&0&0\\
-0&0&\varepsilon/3&0\\
-0&0&0&\varepsilon/3
-\end{pmatrix},$$
+This is a paragraph with **bold**, *italics*, `inline_code`, $inline math$, and ~~strikestrikethrough~~ in it
 
 
 > This is a blockquote.
@@ -65,6 +45,35 @@ This paragraph has a double newline
 
 between them, creating a line break.
 
+
+## Tables
+| Header 1 | Header 2 | Header 3 |
+| -------- | -------- | -------- |
+| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |
+| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |
+
+## Images
+
+![This is alt text for an image](http://localhost:8000/images/account.png)
+
+## Inline & Block-line Equations
+
+Inline math:
+$E=mc^2$
+
+Block math:
+$$
+\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+$$
+
+$$T^{\mu\nu}=\begin{pmatrix}
+\varepsilon&0&0&0\\
+0&\varepsilon/3&0&0\\
+0&0&\varepsilon/3&0\\
+0&0&0&\varepsilon/3
+\end{pmatrix},$$
+
+# LaTeX Tikz
 
 
 $$\usetikzlibrary{decorations.pathmorphing}

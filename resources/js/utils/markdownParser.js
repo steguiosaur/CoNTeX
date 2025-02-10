@@ -1,14 +1,21 @@
-// Helper function to escape HTML special characters
+// Helper function to escape HTML special characters (only escaping <, >, and &)
 export const escapeSpecialChars = (str) => {
     if (!str) return '';
     const charMap = {
-        '<': '<',
-        '>': '>',
-        '&': '&',
+        '<': '&lt;',
+        '>': '&gt;',
+        '&': '&amp;',
+        // Do not escape quotes
         '"': '"',
-        "'": '\''
+        "'": "'"
     };
-    return str.replace(/[<>&"']/g, (match) => charMap[match]);
+    // Only replace <, >, and &
+    return str.replace(/[<>&]/g, (match) => charMap[match]);
+};
+
+// Helper function to determine if a character could start an inline token
+const isInlineTokenStart = (char) => {
+    return ['\\', '*', '_', '`', '!', '[', '~', '$'].includes(char);
 };
 
 // Tokenizer
@@ -20,7 +27,24 @@ const tokenize = (markdown) => {
 
     while (i < markdown.length) {
         if (markdown[i] === '\\') {
-            if (markdown[i + 1] === '#' || markdown[i + 1] === '*' || markdown[i + 1] === '_' || markdown[i + 1] === '`' || markdown[i + 1] === '[' || markdown[i + 1] === ']' || markdown[i + 1] === '(' || markdown[i + 1] === ')' || markdown[i + 1] === '>' || markdown[i + 1] === '-' || markdown[i + 1] === '+' || markdown[i + 1] === '.' || markdown[i + 1] === '!' || markdown[i + 1] === '~' || markdown[i + 1] === '$' || markdown[i + 1] === '\\') {
+            if (
+                markdown[i + 1] === '#' ||
+                markdown[i + 1] === '*' ||
+                markdown[i + 1] === '_' ||
+                markdown[i + 1] === '`' ||
+                markdown[i + 1] === '[' ||
+                markdown[i + 1] === ']' ||
+                markdown[i + 1] === '(' ||
+                markdown[i + 1] === ')' ||
+                markdown[i + 1] === '>' ||
+                markdown[i + 1] === '-' ||
+                markdown[i + 1] === '+' ||
+                markdown[i + 1] === '.' ||
+                markdown[i + 1] === '!' ||
+                markdown[i + 1] === '~' ||
+                markdown[i + 1] === '$' ||
+                markdown[i + 1] === '\\'
+            ) {
                 tokens.push({ type: 'text', content: markdown[i + 1] });
                 i += 2;
                 continue;
@@ -63,16 +87,34 @@ const tokenize = (markdown) => {
                 i++;
             }
             tokens.push({ type: 'blockquote', content: content.trim() });
-        } else if ((markdown[i] === '*' && markdown[i + 1] === '*') || (markdown[i] === '_' && markdown[i + 1] === '_')) {
+        } else if (
+            (markdown[i] === '*' && markdown[i + 1] === '*') ||
+            (markdown[i] === '_' && markdown[i + 1] === '_')
+        ) {
             const marker = markdown[i] + markdown[i + 1];
-            i += 2;
+            const start = i; // Remember the start index in case we don't find a closing marker
+            i += 2; // Skip the opening marker
             let content = '';
-            while (i < markdown.length && !(markdown[i] === marker[0] && markdown[i + 1] === marker[1])) {
+            let foundClosing = false;
+
+            // Search for the closing marker
+            while (i < markdown.length) {
+                // Ensure there are at least two characters left for a valid closing marker
+                if (i + 1 < markdown.length && markdown[i] === marker[0] && markdown[i + 1] === marker[1]) {
+                    foundClosing = true;
+                    break;
+                }
                 content += markdown[i];
                 i++;
             }
-            tokens.push({ type: 'bold', content: content.trim() });
-            i += 2;
+
+            if (foundClosing) {
+                i += 2; // Skip the closing marker
+                tokens.push({ type: 'bold', content: content.trim() });
+            } else {
+                // No closing marker found: treat the opening marker and the following text as plain text
+                tokens.push({ type: 'text', content: markdown.slice(start, i) });
+            }
         } else if (markdown[i] === '*' || markdown[i] === '_') {
             const marker = markdown[i];
             i++;
@@ -92,7 +134,7 @@ const tokenize = (markdown) => {
             let codeBlockLength = 0; // Track code block length
             while (i < markdown.length && !(markdown[i] === '`' && markdown[i + 1] === '`' && markdown[i + 2] === '`')) {
                 if (codeBlockLength < MAX_CODE_BLOCK_LENGTH) {
-                    content += content + markdown[i];
+                    content += markdown[i];
                     codeBlockLength++;
                 }
                 i++;
@@ -192,7 +234,7 @@ const tokenize = (markdown) => {
                 formula += markdown[i];
                 i++;
             }
-            if (markdown[i] === '$' && markdown[i+1] === '$') {
+            if (markdown[i] === '$' && markdown[i + 1] === '$') {
                 tokens.push({ type: 'block_math', formula: formula.trim() });
                 i += 2;
             } else {
@@ -245,13 +287,20 @@ const tokenize = (markdown) => {
                 tokens.push({ type: 'text', content: numberStr + (markdown[i] === '.' ? '.' : '') });
             }
         }
+        // Modified plain-text handler: stop accumulating if an inline token start is encountered.
         else {
             let content = '';
-            while (i < markdown.length && markdown[i] !== '\n') {
+            while (
+                i < markdown.length &&
+                markdown[i] !== '\n' &&
+                !isInlineTokenStart(markdown[i])
+                ) {
                 content += markdown[i];
                 i++;
             }
-            tokens.push({ type: 'paragraph', content: content.trim() });
+            if (content.length > 0) {
+                tokens.push({ type: 'text', content: content });
+            }
         }
     }
     return tokens;
@@ -288,7 +337,6 @@ const parse = (tokens) => {
 
     return ast;
 };
-
 
 // Renderer
 const render = (ast) => {
@@ -331,29 +379,15 @@ const render = (ast) => {
                     break;
                 case 'paragraph':
                     if (!paragraphOpen) {
-                        if (blockquoteOpen) {
-                            sectionHTML += `<p>`;
-                        } else if (listOpen) {
-                            sectionHTML += `<p>`;
-                        }
-                        else {
-                            sectionHTML += `<p>`;
-                            paragraphOpen = true;
-                        }
+                        sectionHTML += `<p>`;
+                        paragraphOpen = true;
                     }
                     sectionHTML += `${escapeSpecialChars(token.content)}`;
                     break;
                 case 'text':
                     if (!paragraphOpen) {
-                        if (blockquoteOpen) {
-                            sectionHTML += `<p>`;
-                        } else if (listOpen) {
-                            sectionHTML += `<p>`;
-                        }
-                        else {
-                            sectionHTML += `<p>`;
-                            paragraphOpen = true;
-                        }
+                        sectionHTML += `<p>`;
+                        paragraphOpen = true;
                     }
                     sectionHTML += `${escapeSpecialChars(token.content)}`;
                     break;
@@ -393,8 +427,8 @@ const render = (ast) => {
                     break;
                 case 'inline_math': {
                     const protocol = location.protocol === "https:" ? "https:" : "http:";
-                    const url = protocol + '//i.upmath.me/svg/' + encodeURIComponent('$$' + token.formula + '$$'); // Encoded with single $ now
-                    sectionHTML += `<img class="latex-code" style="vertical-align: middle; display: inline-block;" src="${url}" alt="${token.formula}" />`; // Ensure inline-block
+                    const url = protocol + '//i.upmath.me/svg/' + encodeURIComponent('$$' + token.formula + '$$');
+                    sectionHTML += `<img class="latex-code" style="vertical-align: middle; display: inline-block;" src="${url}" alt="${token.formula}" />`;
                     break;
                 }
                 case 'block_math': {
@@ -473,14 +507,11 @@ const render = (ast) => {
                         paragraphOpen = false;
                     } else if (token.count >= 2 && blockquoteOpen) {
                         sectionHTML += `<br>`;
-                    }
-                    else if (token.count >= 2) {
+                    } else if (token.count >= 2) {
                         sectionHTML += `<br>`;
-                    }
-                    else if (paragraphOpen) {
+                    } else if (paragraphOpen) {
                         sectionHTML += ` `;
-                    }
-                    else if (blockquoteOpen) {
+                    } else if (blockquoteOpen) {
                         sectionHTML += ` `;
                     }
                     break;
