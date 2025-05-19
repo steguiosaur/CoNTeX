@@ -10,6 +10,19 @@
     An Interactive Web-Based Note-Taking Platform with Markdown, LaTeX, and UML Support
 </p>
 
+<div align="center">
+    <img src=".github/images/Screenshot 2025-02-11 at 09-41-00 CoNTeX Home.png" alt="CoNTeX Home">
+    <img src=".github/images/Screenshot 2025-02-11 at 11-04-34 CoNTeX Editor.png" alt="CoNTeX Editor">
+</div>
+
+<details>
+    <summary>View Other Screenshots</summary>
+    <img src=".github/images/Screenshot 2025-02-11 at 09-41-12 CoNTeX Home.png" alt="CoNTeX Home 2">
+    <img src=".github/images/Screenshot 2025-02-11 at 09-41-34 CoNTeX Login.png" alt="CoNTeX Login">
+    <img src=".github/images/Screenshot 2025-02-11 at 09-41-43 CoNTeX Register.png" alt="CoNTeX Register">
+    <img src=".github/images/Screenshot 2025-02-11 at 09-45-07 CoNTeX Vaults.png" alt="CoNTeX Vaults">
+</details>
+
 ## Requirements
 
 - Php 8.3
