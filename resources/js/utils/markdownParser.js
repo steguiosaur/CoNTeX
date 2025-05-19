@@ -447,7 +447,7 @@ const render = (ast) => {
                         listOpen = false;
                         listType = null;
                     }
-                    sectionHTML += `<div class="latex-code" style="text-align:center;"><img src="${url}" alt="${token.formula.trim()}" /></div>`;
+                    sectionHTML += `<div class="latex-code" style="text-align:center;"><img style="display:block; margin-left:auto; margin-right:auto;" src="${url}" alt="${token.formula.trim()}" /></div>`;
                     break;
                 }
                 case 'blockquote':
