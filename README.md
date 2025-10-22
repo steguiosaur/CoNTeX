@@ -1,3 +1,4 @@
+<!-- markdownlint-disable -->
 <h1 align="center">CoNTeX</h1>
 
 <div align="center">
@@ -22,6 +23,8 @@
     <img src=".github/images/Screenshot 2025-02-11 at 09-41-43 CoNTeX Register.png" alt="CoNTeX Register">
     <img src=".github/images/Screenshot 2025-02-11 at 09-45-07 CoNTeX Vaults.png" alt="CoNTeX Vaults">
 </details>
+
+<!-- markdownlint-enable -->
 
 ## Requirements
 
