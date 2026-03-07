@@ -2,6 +2,22 @@
 
 Things to do. DO NOT USE LLM TO GENERATE CODE.
 
+## Reorder Later
+
+- Make it able to change the LaTeX rendering engine
+- Make it also be able to use the local LaTeX renderer like TeXLive
+- quicktex, upmath.me, mathjax, local, disable render, implement it
+- same change and disable PlantUML
+- Do fractional indexing for blocks of text
+- Add Redis to store info on what is being written for collaboratoin
+- sotre snapshots on db postgresql json something
+- Send the current changes on the other collaborators. Not directly change what
+  is on the database
+- Websocket connection for collaboration
+- Blocks of sections instead of one file of information being sent on editor.
+- Look at RBAC Database Schema Design (not this one)
+- See access control list (ACL could be good here)
+
 ---
 
 ## Workflow
