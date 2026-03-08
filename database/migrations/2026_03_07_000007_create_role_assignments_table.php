@@ -11,14 +11,14 @@ return new class extends Migration
     {
         Schema::create('role_assignments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('account_id')->constrained('accounts')->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignUuid('vault_id')->constrained('vaults')->cascadeOnDelete();
             $table->foreignUuid('folder_id')->nullable()->constrained('folders')->cascadeOnDelete();
             $table->foreignUuid('file_id')->nullable()->constrained('files')->cascadeOnDelete();
             $table->enum('role', ['viewer', 'editor', 'admin']);
             $table->timestamps();
 
-            $table->index(['account_id', 'vault_id']);
+            $table->index(['user_id', 'vault_id']);
         });
 
         // role should not be assigned to both folder and file at the same time
