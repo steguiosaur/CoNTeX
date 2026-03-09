@@ -2,23 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vault extends Model
 {
-    use HasFactory;
+    use HasUuids;
 
-    protected $primaryKey = 'vault_id';
-    public $incrementing = true;
     protected $fillable = [
-        'user_id',
-        'vault_name',
+        'owner_id',
+        'name',
         'description',
+        'is_private',
     ];
 
-    public function user()
+    public function account(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class);
+    }
+
+    public function folders(): HasMany
+    {
+        return $this->hasMany(Folder::class);
     }
 }

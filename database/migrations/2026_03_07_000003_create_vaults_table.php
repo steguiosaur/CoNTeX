@@ -10,13 +10,13 @@ return new class extends Migration
     {
         Schema::create('vaults', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignUuid('owner_id')->constrained('users')->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
             $table->boolean('is_private')->default(false);
             $table->timestamps();
 
-            $table->index('user_id');
+            $table->index('owner_id');
         });
     }
 
