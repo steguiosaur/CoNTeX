@@ -18,7 +18,7 @@ class Vault extends Model
         'is_private',
     ];
 
-    public function account(): BelongsTo
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
@@ -31,5 +31,10 @@ class Vault extends Model
     public function folders(): HasMany
     {
         return $this->hasMany(Folder::class);
+    }
+
+    public function role_assignments(): HasMany
+    {
+        return $this->hasMany(RoleAssignment::class);
     }
 }

@@ -10,7 +10,12 @@ class Block extends Model
 {
     use HasUuids;
 
-    protected $fillable = ['file_id', 'type', 'rank', 'content'];
+    protected $fillable = [
+        'file_id',
+        'type',
+        'rank',
+        'content'
+    ];
 
     protected function casts(): array
     {

@@ -33,8 +33,8 @@ class File extends Model
 
     public function blocks(): HasMany
     {
-        return $this->hasMany(Block::class)
-            ->orderBy('rank', 'asc'); // Fractional indexing (LexoRank order)
+        // Fractional indexing (LexoRank order)
+        return $this->hasMany(Block::class)->orderBy('rank', 'asc');
     }
 
     public function roleAssignments(): HasMany
