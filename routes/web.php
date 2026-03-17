@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VaultController;
-use App\Http\Controllers\DocumentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,23 +24,24 @@ Route::get('/profile', function () {
     return Inertia::render('Profile/Edit');
 })->middleware(['auth', 'verified'])->name('profile');
 
-// Route::get('/editor', function () {
-//     return Inertia::render('EditorPage');
-// })->middleware(['auth', 'verified'])->name('editor');
-
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('vaults', VaultController::class);
+    Route::get('/vaults', [VaultController::class, 'index'])->name('vaults.index');
+    Route::post('/vaults', [VaultController::class, 'store'])->name('vaults.store');
+    Route::patch('/vaults/{vault}', [VaultController::class, 'update'])->name('vaults.update');
+    Route::delete('/vaults/{vault}', [VaultController::class, 'destroy'])->name('vaults.destroy');
+    Route::delete('/vaults/{vault}/collaborators/me', [VaultController::class, 'destroy'])->name('vaults.collaborators.me.delete');
+    Route::get('/vaults/{vault}', [VaultController::class, 'show'])->name('vaults.show');
 
-    Route::prefix('vaults/{vault}')->group(function () {
-        Route::resource('documents', DocumentController::class)->except(['index', 'show', 'create', 'store']);
-        Route::get('/documents/{document}/edit', [DocumentController::class, 'edit'])->name('documents.edit');
-        Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
-        Route::get('/editor', [DocumentController::class, 'edit'])->name('vaults.editor');
-    });
+    // implement api for deleting user collaborator accessing owned vault, folder, file
+    // implement api for adding, showing, editing, deleting folders and files
+
+    Route::get('/api/v1/vaults/{vault}/nodes', [VaultExplorererController::class, 'index'])->name('tree.index');
+    Route::get('/api/v1/files/{file}/blocks', [FileBlockController::class, 'index'])->name('blocks.index');
+    Route::patch('api/v1/blocks/{block}', [FileBlockController::class, 'update'])->name('blocks.update');
 });
 
 require __DIR__ . '/auth.php';
