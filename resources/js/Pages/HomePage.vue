@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import NavBar from '@/Components/NavBar.vue';
@@ -8,9 +7,17 @@ import Footer from '@/Components/Footer.vue';
 
 const user = usePage().props.auth.user;
 
-const goToRegister = () => { router.get(route('register')); };
-const goToLogin = () => { router.get(route('login')); };
-const goToVault = () => { router.get(route('vaults.index')); };
+const goToRegister = () => {
+    router.get(route('register'));
+};
+
+const goToLogin = () => {
+    router.get(route('login'));
+};
+
+const goToVault = () => {
+    router.get(route('vaults.index'));
+};
 
 const smoothScrollToContent = (target) => {
     const targetSection = document.querySelector(target);
@@ -30,7 +37,7 @@ const smoothScrollToContent = (target) => {
 
         <GoToTopButton />
 
-        <!-- Welcome page or something -->
+        <!-- WELCOME PAGE -->
         <section class="w-full min-h-screen flex flex-col items-center justify-center
         px-14 py-14">
             <div class="w-full max-w-7xl flex flex-wrap items-center justify-center md:justify-between">
