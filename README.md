@@ -31,7 +31,8 @@
 - Php 8.3
 - Composer
 - Node.js
-- MySQL/MariaDB Database
+- PostgreSQL
+- Docker (when using Laravel Sail)
 
 ## Development Setup
 
@@ -58,9 +59,9 @@
 4. Edit database information on `.env` or leave defaults:
 
     ```txt
-    DB_CONNECTION=mysql
+    DB_CONNECTION=pgsql
     DB_HOST=127.0.0.1
-    DB_PORT=3306
+    DB_PORT=5432
     DB_DATABASE=contex
     DB_USERNAME=root
     DB_PASSWORD=<input_password>
@@ -68,14 +69,18 @@
 
 5. Generate and load keys:
 
+    > Use `./vendor/bin/sail` instead of `php` when using Laravel Sail
+
     ```sh
     php artisan key:generate
     php artisan config:clear
     ```
 
-6. Start MySQL service
+6. Start `postgresql` service
 
 7. Run database migrations:
+
+    > Use `./vendor/bin/sail` instead of `php` using Laravel Sail
 
     ```sh
     php artisan migrate
@@ -86,6 +91,13 @@
     ```sh
     npm run build
     php artisan serve
+    ```
+
+    > using Laravel Sail
+
+    ```sh
+    sudo systemctl start docker.service
+    ./vendor/bin/sail up
     ```
 
 9. Access site on [localhost:8000](localhost:8000)
