@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\V1\VaultResource;
+use App\Http\Resources\VaultResource;
 use App\Models\Vault;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -37,14 +37,6 @@ class VaultController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * POST /vaults
      * Store a newly created resource in storage.
      */
@@ -62,25 +54,42 @@ class VaultController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * GET /vaults/{vault}
+     * Display Vault contents like files and folders.
      */
     public function show(Request $request, Vault $vault)
     {
         if ($request->user()->cannot('view', $vault)) {
-            abort(403);
+            abort(403, 'You do not have access to this vault.');
         }
 
-        return Inertia::render('EditorPage',[
-            'vault' => new VaultResource($vault)
-        ]);
-    }
+        // Auto-create file if file does not exist in Vault
+        if ($vault->files()->doesntExist()) {
+            $newFile = $vault->files()->create([
+                'name' => 'Untitled Document',
+                'folder_id' => null,
+            ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Vault $vault)
-    {
-        //
+            // Create first block for editor to edit into
+            $newFile->blocks()->create([
+                'type' => 'markdown',
+                'rank' => 'a',
+                'content' => ['text' => ''],
+            ]);
+        }
+
+        // Fetch File Tree (Folders and Files)
+        $folders = $vault->folders()->select('id', 'parent_id', 'name', 'path')->orderBy('path')->get();
+        $files = $vault->files()->select('id', 'folder_id', 'name')->orderBy('name')->get();
+
+        return Inertia::render('EditorPage',[
+            'vault' =>[
+                'id' => $vault->id,
+                'name' => $vault->name,
+            ],
+            'folders' => $folders,
+            'files' => $files,
+        ]);
     }
 
     /**
